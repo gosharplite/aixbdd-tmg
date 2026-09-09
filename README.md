@@ -29,7 +29,7 @@ Supporting skills: `/axb-clarify` (user interviews), `/axb-truth-delta` (truth c
 
 ## Notes
 
-- **Agents**: includes `agents/pm.yaml` and `agents/rd.yaml` role configs
+- **Roles**: includes `roles/pm.yaml` and `roles/rd.yaml` role configs
 - Some skills (specify, clarify-over-specs, tasks, implement, technical-research) are adapted from [GitHub Spec Kit](https://github.com/github/spec-kit) (MIT)
 
 In short: **it's a prompt-engineering framework that turns AI-assisted development into a disciplined BDD pipeline with human review gates at each artifact.**

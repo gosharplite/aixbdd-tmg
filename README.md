@@ -27,6 +27,16 @@ Most AI dev workflows blur PM/RD responsibilities (e.g., developers end up "mind
 
 Supporting skills: `/axb-clarify` (user interviews), `/axb-truth-delta` (truth change tracking), `/axb-gherkin-and-dsl` (Gherkin/DSL standards + a Python topology audit script).
 
+### Developing CLI Applications
+
+When developing a CLI application (no web frontend or HTTP/REST API), the workflow is streamlined:
+
+1. **Skip `/axb-ui-plan`**: No web UI or HTML mockups are created. Terminal interactions (commands, flags, arguments, exit codes, stdin/stdout/stderr) are defined directly as Gherkin acceptance scenarios in `/axb-spec-by-example`.
+2. **Lean `/axb-system-analysis`**:
+   - **`/axb-api-plan`** is skipped (standalone CLIs have no OpenAPI endpoints; marked as `NOOP` in `truth-delta.md`).
+   - **`/axb-data-plan`** is conditional — invoked only if the CLI manages persistent configuration (e.g. `~/.config/...`), local storage (SQLite, JSON), or complex domain state. For stateless CLI tools, it is skipped.
+3. **CLI Contract via `/axb-dsl-refine`**: The executable Gherkin feature files (`specs/truth/features/**`) and their step definitions (`dsl.md`) serve as the formal CLI contract and acceptance test runner.
+
 ## Notes
 
 - **Roles**: includes `roles/pm.yaml` and `roles/rd.yaml` role configs

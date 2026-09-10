@@ -1,6 +1,6 @@
 # ADR 0001 — Atomicity fold/split criterion (Rule 2)
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-09-11
 - **Deciders:** `aixbdd-tmg` owner (`@gosharplite`)
 - **Supersedes:** —
@@ -77,6 +77,8 @@ simultaneously.
 - `skills/axb-gherkin-and-dsl/STANDARDS.md` §2 now points at the single operative criterion instead of
   restating the title heuristic.
 - `domain-model/aixbdd.modelith.yaml`: invariant `acceptance-atomic-rules` restated; model re-rendered.
+- `skills/axb-spec-by-example/rules/gherkin-驗收句型與結構判準.md` Rule 4: the title test is demoted to
+  a smell so the acceptance layer matches the restated invariant.
 - **Cross-owner note:** this PR intentionally edits artifacts owned by two skills
   (`axb-dsl-refine`, `axb-gherkin-and-dsl`) plus the canonical model; the PR itself is the human
   review gate that the per-round skills cannot provide for a host-rule change.

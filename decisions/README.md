@@ -35,4 +35,4 @@ Typo- and editorial-only fixes do not need an ADR.
 
 | ADR | Title | Status |
 | --- | --- | --- |
-| [0001](0001-atomicity-fold-split-criterion.md) | Atomicity fold/split criterion (Rule 2) | Proposed |
+| [0001](0001-atomicity-fold-split-criterion.md) | Atomicity fold/split criterion (Rule 2) | Accepted |

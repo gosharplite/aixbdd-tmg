@@ -109,7 +109,7 @@ And order_summary.discount_amount 欄位應更新為 200
 
 - Level: `SHOULD`
 - `Feature` 應聚焦單一 PM 關心的驗收主題，例如付款超時、運費判定或贈品資格。
-- `Rule` 應保持原子；若 `Example` 標題聽起來像另一條規則，應拆出新的 `Rule` 或新的 feature file。
+- `Rule` 應保持原子（單一驗收面向）；`Example` 標題聽起來像另一條規則只是 smell，可作為拆分提示，但判準是這個 `Rule` 是否在描述另一個驗收面向；是則拆出新的 `Rule` 或新的 feature file。
 - `Example` 標題應描述資料情境或 journey 變種，而不是只重複 `Rule` 名稱。
 
 ## Good Example

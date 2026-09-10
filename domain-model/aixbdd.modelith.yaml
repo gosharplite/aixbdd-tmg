@@ -215,7 +215,8 @@ entities:
       - id: wave-covers-interfaces
         statement: >
           Every interface identified by an `AnalysisPlan` is either delegated to a
-          planner or carried forward to its contract owner in at least one `Wave`.
+          planner in at least one `Wave` or carried forward to its contract owner at
+          delivery.
 
   Wave:
     definition: >
@@ -588,14 +589,15 @@ scenarios:
   - name: CLI end carried by the contract owner
     description: >
       A pure-CLI round inventories a terminal end. No API, data or UI planner
-      applies, so the `AnalysisPlan` carries the end forward to its contract owner,
-      axb-dsl-refine, which writes executable truth under the CLI `Interface`.
+      applies, so the plan carries the end forward — at delivery, not inside a
+      `Wave` — to its contract owner, axb-dsl-refine, which writes executable truth
+      under the CLI `Interface`.
     actors: [RD, Skill]
     steps:
       - "axb-system-analysis inventories a CLI end and records it as an `Interface` of the CLI kind."
-      - "No API, data or UI planner applies; the `Wave` carries the CLI end forward to its contract owner."
+      - "No API, data or UI planner applies; the plan records the CLI end as carried forward to its contract owner at delivery."
       - "axb-dsl-refine writes the CLI feature files under `specs/truth/features/cli/**`, reusing the module boundaries."
       - "axb-truth-delta records the CLI feature and DSL change in the round's `TruthDelta`."
     invariants_touched:
-      [wave-covers-interfaces, truth-single-owner, interface-features-nested,
-       module-boundary-reuse, delta-covers-all-owners]
+      [wave-covers-interfaces, analysis-plan-never-writes-truth, truth-single-owner,
+       interface-features-nested, module-boundary-reuse, delta-covers-all-owners]

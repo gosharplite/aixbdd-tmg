@@ -45,14 +45,14 @@
 2. 後面再補 `/axb-ui-plan`
 ```
 
-# Rule 2 - planner 對應必須依分析責任邊界決定
+# Rule 2 - planner／contract-owner 對應必須依分析責任邊界決定
 
 - Level: `MUST`
-- `axb-system-analysis` 必須依每個系統介面的主要分析責任與產物邊界決定委派對象，而不是只看名稱中是否出現某個技術詞。
+- `axb-system-analysis` 必須依每個系統介面的主要分析責任與產物邊界決定其委派對象或承接者，而不是只看名稱中是否出現某個技術詞。
 - 玩家可見流程、畫面狀態、互動節奏、資訊揭露與錯誤回饋，應委派給 `/axb-ui-plan`。
 - 實體、欄位、狀態持有、生命週期、資料關聯與儲存責任，應委派給 `/axb-data-plan`。
 - API 契約、事件協議、請求回應形狀、狀態轉移入口與錯誤碼語意，應委派給 `/axb-api-plan`。
-- 終端使用者／操作者可見的指令、flags、stdout/stderr 與 exit-code 契約（CLI 介面），沒有對應的 analysis planner，應以其 contract owner `/axb-dsl-refine` 承接，於交付時明文交棒，不委派 `/axb-api-plan`、`/axb-data-plan` 或 `/axb-ui-plan`。
+- 終端使用者／操作者可見的指令、flags、stdout/stderr 與 exit-code 契約（CLI 介面），沒有對應的 analysis planner：不以 `/axb-api-plan`、`/axb-data-plan` 或 `/axb-ui-plan` 承接，而是以 contract owner `/axb-dsl-refine` 為承接者，於交付時明文交棒。
 - 若某個介面同時涉及多種責任，應回到 `plan.md` 的介面切分重新判斷是否需要拆分，而不是把同一介面同時丟給多個 planner。
 
 ## Good Example
@@ -74,7 +74,7 @@
 
 4. `CLI 指令與退出碼介面`
    - 主要介面：指令、flags、stdout/stderr 與 exit-code 契約
-   - 委派：`/axb-dsl-refine`（CLI contract owner；無對應 analysis planner）
+   - 承接：`/axb-dsl-refine`（CLI contract owner；無對應 analysis planner）
 ```
 
 ## Bad Example

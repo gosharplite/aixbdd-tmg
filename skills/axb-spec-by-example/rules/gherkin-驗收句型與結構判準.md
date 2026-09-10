@@ -2,7 +2,7 @@
 
 - Level: `MUST`
 - 這一層的產物是 spec package 內的 `features/acceptance/*.feature`。
-- 此階段不得先拆成 `frontend` / `backend`，也不得同時產出 `dsl.md`。
+- 此階段不得先拆成 `frontend` / `backend` / `cli`，也不得同時產出 `dsl.md`。
 - 句子只表達 PM 需要確認的驗收流程與業務結果，不提前混入實作層設計。
 
 ## Good Example

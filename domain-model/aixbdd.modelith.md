@@ -69,7 +69,7 @@ The system-analysis artifact (`plan.md`) produced by axb-system-analysis: the in
 **Invariants**
 
 - **analysis-plan-never-writes-truth** — An `AnalysisPlan` orchestrates analysis only; it never creates or modifies a `TruthArtifact`.
-- **wave-covers-interfaces** — Every interface identified by an `AnalysisPlan` is either delegated to a planner or carried forward to its contract owner in at least one `Wave`.
+- **wave-covers-interfaces** — Every interface identified by an `AnalysisPlan` is either delegated to a planner in at least one `Wave` or carried forward to its contract owner at delivery.
 
 ### `Contract`
 
@@ -446,7 +446,7 @@ In parallel with the PM's later steps, the `RD` researches technology, then anal
 - **research-precedes-techstack** — A `Techstack` update is applied only after the `Research` producing it has been reviewed.
 - **techstack-complete** — The `Techstack` represents the complete current technology stack, not just the latest round's delta.
 - **analysis-plan-never-writes-truth** — An `AnalysisPlan` orchestrates analysis only; it never creates or modifies a `TruthArtifact`.
-- **wave-covers-interfaces** — Every interface identified by an `AnalysisPlan` is either delegated to a planner or carried forward to its contract owner in at least one `Wave`.
+- **wave-covers-interfaces** — Every interface identified by an `AnalysisPlan` is either delegated to a planner in at least one `Wave` or carried forward to its contract owner at delivery.
 - **wave-dependency-ordered** — A `Wave` is scheduled only after the `Wave`s it depends on have completed.
 - **contract-authoritative** — The system's API surface is defined only in the `Contract`; no other artifact specifies API behavior.
 - **data-model-covers-all-state** — The `DataModel` covers every kind of system state, persisted and in-memory alike.
@@ -540,20 +540,21 @@ A sentence pattern appears both at the interface root and inside a module DSL. T
 
 ### CLI end carried by the contract owner
 
-A pure-CLI round inventories a terminal end. No API, data or UI planner applies, so the `AnalysisPlan` carries the end forward to its contract owner, axb-dsl-refine, which writes executable truth under the CLI `Interface`.
+A pure-CLI round inventories a terminal end. No API, data or UI planner applies, so the plan carries the end forward — at delivery, not inside a `Wave` — to its contract owner, axb-dsl-refine, which writes executable truth under the CLI `Interface`.
 
 **Actors:** RD, Skill
 
 **Steps**
 
 1. axb-system-analysis inventories a CLI end and records it as an `Interface` of the CLI kind.
-2. No API, data or UI planner applies; the `Wave` carries the CLI end forward to its contract owner.
+2. No API, data or UI planner applies; the plan records the CLI end as carried forward to its contract owner at delivery.
 3. axb-dsl-refine writes the CLI feature files under `specs/truth/features/cli/**`, reusing the module boundaries.
 4. axb-truth-delta records the CLI feature and DSL change in the round's `TruthDelta`.
 
 **Invariants touched**
 
-- **wave-covers-interfaces** — Every interface identified by an `AnalysisPlan` is either delegated to a planner or carried forward to its contract owner in at least one `Wave`.
+- **wave-covers-interfaces** — Every interface identified by an `AnalysisPlan` is either delegated to a planner in at least one `Wave` or carried forward to its contract owner at delivery.
+- **analysis-plan-never-writes-truth** — An `AnalysisPlan` orchestrates analysis only; it never creates or modifies a `TruthArtifact`.
 - **truth-single-owner** — Each `TruthArtifact` has exactly one owning `Skill`, which is the only writer allowed to change it.
 - **interface-features-nested** — Feature files live only inside a `Module`; an `Interface` root never contains feature files directly.
 - **module-boundary-reuse** — Module boundaries are reused from existing truth; a round does not invent new `Module`s while a suitable one exists.

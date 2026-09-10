@@ -35,7 +35,7 @@ When developing a CLI application (no web frontend or HTTP/REST API), the workfl
 2. **Lean `/axb-system-analysis`**:
    - **`/axb-api-plan`** is skipped (standalone CLIs have no OpenAPI endpoints; marked as `NOOP` in `truth-delta.md`).
    - **`/axb-data-plan`** is conditional — invoked only if the CLI manages persistent configuration (e.g. `~/.config/...`), local storage (SQLite, JSON), or complex domain state. For stateless CLI tools, it is skipped.
-3. **CLI Contract via `/axb-dsl-refine`**: The executable Gherkin feature files (`specs/truth/features/**`) and their step definitions (`dsl.md`) serve as the formal CLI contract and acceptance test runner.
+3. **CLI Contract via `/axb-dsl-refine`**: The CLI end is a first-class truth-tree interface — a third `InterfaceKind`, `cli`, alongside `backend`/`frontend`. The executable Gherkin feature files (`specs/truth/features/cli/**`) and their step definitions (`dsl.md`) serve as the formal CLI contract and acceptance test runner. Since no API/data/UI planner applies, `/axb-system-analysis` records no planner for it and carries the CLI end forward to its contract owner `/axb-dsl-refine`.
 
 ## Notes
 

@@ -52,6 +52,7 @@
 - 玩家可見流程、畫面狀態、互動節奏、資訊揭露與錯誤回饋，應委派給 `/axb-ui-plan`。
 - 實體、欄位、狀態持有、生命週期、資料關聯與儲存責任，應委派給 `/axb-data-plan`。
 - API 契約、事件協議、請求回應形狀、狀態轉移入口與錯誤碼語意，應委派給 `/axb-api-plan`。
+- 終端使用者／操作者可見的指令、flags、stdout/stderr 與 exit-code 契約（CLI 介面），沒有對應的 analysis planner，應以其 contract owner `/axb-dsl-refine` 承接，於交付時明文交棒，不委派 `/axb-api-plan`、`/axb-data-plan` 或 `/axb-ui-plan`。
 - 若某個介面同時涉及多種責任，應回到 `plan.md` 的介面切分重新判斷是否需要拆分，而不是把同一介面同時丟給多個 planner。
 
 ## Good Example
@@ -70,6 +71,10 @@
 3. `後端即時事件契約介面`
    - 主要介面：join/create、ready、start、guess、broadcast
    - 委派：`/axb-api-plan`
+
+4. `CLI 指令與退出碼介面`
+   - 主要介面：指令、flags、stdout/stderr 與 exit-code 契約
+   - 委派：`/axb-dsl-refine`（CLI contract owner；無對應 analysis planner）
 ```
 
 ## Bad Example

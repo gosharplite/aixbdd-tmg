@@ -4,6 +4,24 @@
 
 > Gherkin 要讓 PM 看得懂，DSL 要讓 AI / 測試作者幾乎不需要腦補就能落地成測試程式碼。
 
+## 專案語言（Project Language）
+
+- 本標準預設 artifact 以**繁體中文**書寫，但語言**由專案宣告，不是本標準硬性固定**。
+- 專案 MAY 覆寫預設語言。宣告必須落在一個**具名的家**（依序為）：專案的 `.agents/constitution/shared.md`、專案的決策紀錄（ADR，例如 `decisions/NNNN-*.md`）、或 `spec.md` 的明示限制。找不到任何宣告時，預設為繁體中文。
+- 覆寫**只涵蓋「專案宣告語言」的部分**；下列 DSL 契約詞彙為**固定**，不隨專案語言改變：
+
+| 面向 | 語言 | 依據 |
+| --- | --- | --- |
+| feature 檔名（§2） | 專案宣告 | 非契約 token，可翻譯 |
+| Gherkin 參數 key 名稱（§3） | 專案宣告 | 須與 Gherkin 句型語言一致 |
+| Gherkin 句型、關鍵字與散文 | 專案宣告 | 稽核腳本 `audit_feature_dsl_topology.py` 的 `STEP_RE` 已同時接受英文與中文關鍵字 |
+| §3 的引號與 DataTable 慣例 | 與語言無關 | 一律沿用，不隨語言改變 |
+| §4／§5 的 DSL meta-schema 欄位 token（`DSL 句型`、`Gherkin 參數`、`Data Table 參數`、`預設參數`、實作語意欄） | **固定** | 稽核腳本以第一欄 header 必須恰為 `DSL 句型` 判定表格；翻譯該 token 會讓稽核靜默零命中、所有 step 被誤判為缺 DSL |
+| §5.2 的通道標籤（`呈現結果` / `權威狀態` / `再讀確認` / `跨視角` / `不該發生`）與 §5.1 的 Given / When 子標籤（`怎麼做` / `權威狀態落地` / `回寫` / `不必查`） | **固定** | 跨專案共用契約詞彙 |
+
+- 換句話說：**專案宣告者**＝檔名、參數 key、句型與散文；**固定者**＝ §4／§5 的 meta-schema token 與契約通道詞彙。
+- 本節與治理層的語言規則（例如 `.agents/constitution/shared.md` 的「說明文字必須使用繁體中文」）互補：治理層規則定義**預設語言與其落點**，本節定義**可被專案宣告覆寫的範圍**。
+
 ## 1. Gherkin 語言邊界與句型收斂
 
 - Gherkin 句型只講業務語意，不講 API、HTTP、selector、sessionStorage、輪詢、fixture 名稱。
@@ -18,7 +36,7 @@
 
 ## 2. Feature / Rule / Example 結構
 
-- 先依系統功能面向切 feature files，檔名用繁體中文，並清楚表達受測動作或面向。
+- 先依系統功能面向切 feature files，檔名預設用繁體中文（語言可依〈專案語言〉一節由專案宣告覆寫），並清楚表達受測動作或面向。
 - `Rule` 必須原子化：一個 Rule 只承載一個受測主體（subject），其多個 `Then` / `And` 必須被該主體結果所蘊含（entailment）。判準與 calibration set 見 `axb-dsl-refine` 的 `rules/介面Gherkin原子化與單一Act判準.md` Rule 2；未被蘊含的斷言必須拆成新的 Rule。Example 標題聽起來像另一條規則只是 smell，不是判準。
 - `Example` 應該描述資料情境，不要只是重複 Rule 名稱。
 - `Background` 只有在同一份 feature 裡，多個 Example 真的共用同一段 setup，且抽出後不會讓 Example 變難讀時才使用。
@@ -39,11 +57,11 @@
 - 句中字串參數用雙引號：`"Alice"`、`"1234"`、`"等待中"`。
 - 句中整數參數不加引號：`1`、`2`。
 - DataTable 中的值一律不加引號。
-- 參數 key 名稱用繁體中文，並盡量和規格一致，如：`玩家`、`配對碼`、`密文`、`猜測`。
+- 參數 key 名稱預設用繁體中文，並盡量和規格一致，如：`玩家`、`配對碼`、`密文`、`猜測`；語言可依〈專案語言〉一節由專案宣告覆寫，且須與該專案的 Gherkin 句型語言一致。
 
 ## 4. DSL 必備欄位
 
-介面根與模組 `dsl.md` 中的每個 DSL row 至少要有：
+介面根與模組 `dsl.md` 中的每個 DSL row 至少要有（下列欄位 token 為固定契約詞彙，不隨專案語言改變；見〈專案語言〉一節）：
 
 - `DSL 句型`
 - `Gherkin 參數`

@@ -151,8 +151,13 @@ entities:
           other technical detail, and no front/back-end split.
       - id: acceptance-atomic-rules
         statement: >
-          Each `Rule` in an `AcceptanceFeature` is atomic; an Example title that
-          reads like another rule means the rule must be split.
+          Each `Rule` in an `AcceptanceFeature` carries exactly one named subject:
+          every Then/And assertion must be entailed by that subject's outcome, and it
+          must be split when an assertion introduces a second subject or a fact the
+          outcome does not entail. This is the same criterion axb-dsl-refine applies
+          to interface rules; its operative form and calibration set live in that
+          skill's atomicity rule file. An Example title that reads like another `Rule`
+          is only a smell, not the test.
 
   UIPlan:
     definition: >

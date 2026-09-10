@@ -19,7 +19,7 @@
 ## 2. Feature / Rule / Example 結構
 
 - 先依系統功能面向切 feature files，檔名用繁體中文，並清楚表達受測動作或面向。
-- `Rule` 必須原子化：如果 Example 的標題聽起來像另一條規則，就應拆成新的 Rule。
+- `Rule` 必須原子化：一個 Rule 只承載一個受測主體（subject），其多個 `Then` / `And` 必須被該主體結果所蘊含（entailment）。判準與 calibration set 見 `axb-dsl-refine` 的 `rules/介面Gherkin原子化與單一Act判準.md` Rule 2；未被蘊含的斷言必須拆成新的 Rule。Example 標題聽起來像另一條規則只是 smell，不是判準。
 - `Example` 應該描述資料情境，不要只是重複 Rule 名稱。
 - `Background` 只有在同一份 feature 裡，多個 Example 真的共用同一段 setup，且抽出後不會讓 Example 變難讀時才使用。
 - `Scenario Outline` 只用在「同一條規則、流程完全相同、只是整組資料替換」的情況；如果其實是不同規則，不要硬套 Scenario Outline。

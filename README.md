@@ -40,6 +40,9 @@ When developing a CLI application (no web frontend or HTTP/REST API), the workfl
 ## Notes
 
 - **Roles**: includes `roles/pm.yaml` and `roles/rd.yaml` role configs
+- **Decisions**: changes to this repo's own governed artifacts (skills, rules, `STANDARDS.md`, the
+  domain model) are recorded as short ADRs under `decisions/` — see
+  [`decisions/README.md`](decisions/README.md).
 - Some skills (specify, clarify-over-specs, tasks, implement, technical-research) are adapted from [GitHub Spec Kit](https://github.com/github/spec-kit) (MIT)
 
 In short: **it's a prompt-engineering framework that turns AI-assisted development into a disciplined BDD pipeline with human review gates at each artifact.**

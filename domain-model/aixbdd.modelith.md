@@ -56,7 +56,7 @@ A PM-readable Gherkin file (`features/acceptance/*.feature`) expressing the roun
 **Invariants**
 
 - **acceptance-business-language** — An `AcceptanceFeature` uses business language only — no API, selector, or other technical detail, and no front/back-end split.
-- **acceptance-atomic-rules** — Each `Rule` in an `AcceptanceFeature` is atomic; an Example title that reads like another rule means the rule must be split.
+- **acceptance-atomic-rules** — Each `Rule` in an `AcceptanceFeature` carries exactly one named subject: every Then/And assertion must be entailed by that subject's outcome, and it must be split when an assertion introduces a second subject or a fact the outcome does not entail. This is the same criterion axb-dsl-refine applies to interface rules; its operative form and calibration set live in that skill's atomicity rule file. An Example title that reads like another `Rule` is only a smell, not the test.
 
 ### `AnalysisPlan`
 
@@ -423,7 +423,7 @@ A new requirement arrives; the `PM` runs the specify, spec-by-example and ui-pla
 - **fresh-package-per-round** — Every new round starts a fresh `PlanPackage`; requirements are never re-opened inside an old package.
 - **spec-pm-authored** — Only the `PM` edits a `Spec`; the `RD` side escalates gaps through clarification instead of editing it.
 - **acceptance-business-language** — An `AcceptanceFeature` uses business language only — no API, selector, or other technical detail, and no front/back-end split.
-- **acceptance-atomic-rules** — Each `Rule` in an `AcceptanceFeature` is atomic; an Example title that reads like another rule means the rule must be split.
+- **acceptance-atomic-rules** — Each `Rule` in an `AcceptanceFeature` carries exactly one named subject: every Then/And assertion must be entailed by that subject's outcome, and it must be split when an assertion introduces a second subject or a fact the outcome does not entail. This is the same criterion axb-dsl-refine applies to interface rules; its operative form and calibration set live in that skill's atomicity rule file. An Example title that reads like another `Rule` is only a smell, not the test.
 - **prototype-flows-cover-acceptance** — The `Prototype`s of a `UIPlan` cover the acceptance flows defined by the round's `AcceptanceFeature`s.
 - **prototype-plan-side-only** — A `Prototype` is a plan-side artifact and never becomes a `TruthArtifact`.
 

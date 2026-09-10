@@ -1,6 +1,6 @@
 ---
 name: axb-dsl-refine
-description: Truth owner skill。承接 plan package 的 acceptance Gherkin 與 axb-system-analysis 產物，將業務 Journey 拆成 interface-level executable feature files 與 DSL，並更新 `specs/truth/features/backend/**`、`specs/truth/features/frontend/**`。完成後委派 `/axb-truth-delta` 記錄 feature/dsl truth 改動。
+description: Truth owner skill。承接 plan package 的 acceptance Gherkin 與 axb-system-analysis 產物，將業務 Journey 拆成 interface-level executable feature files 與 DSL，並更新 `specs/truth/features/backend/**`、`specs/truth/features/frontend/**`、`specs/truth/features/cli/**`。完成後委派 `/axb-truth-delta` 記錄 feature/dsl truth 改動。
 disable-model-invocation: true
 ---
 
@@ -13,7 +13,7 @@ disable-model-invocation: true
 ## Phase 1 -- 對齊 acceptance、系統介面與 feature truth
 
 1. READ 讀取使用者要求、目標 plan package 的 `features/acceptance/**`、`plan.md`、`truth-delta.md`、`specs/truth/techstack.md`、相關 UI plan，以及受影響介面的既有功能模組、feature、模組 DSL 與介面根共用 DSL。
-2. THINK 從 `plan.md`、truth-delta 與現有 feature truth 辨識本次涉及的前端、後端或其他系統介面，以及各介面既有 feature/dsl 是否需要 ADD / MODIFY / DELETE。
+2. THINK 從 `plan.md`、truth-delta 與現有 feature truth 辨識本次涉及的前端、後端、CLI 或其他系統介面，以及各介面既有 feature/dsl 是否需要 ADD / MODIFY / DELETE。
 3. WRITE 向使用者回報本輪辨識出的介面、預計新增/修改/刪除的 truth feature files 與 DSL 範圍。
 
 ## Phase 2 -- 分派 acceptance 規則並處理高影響變更

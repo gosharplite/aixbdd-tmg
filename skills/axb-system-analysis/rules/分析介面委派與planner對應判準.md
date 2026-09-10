@@ -7,52 +7,52 @@
 
 ## Good Example
 
-- 這個例子是好的，因為它先完成前端流程分析，再把依賴前端輸入與狀態定義的後端分析放到下一波。
+- 這個例子是好的，因為它先收斂後端事件契約，再把依賴該契約的資料狀態設計放到下一波。
 
 ```md
 #### Wave 1
 
 - 平行分析介面：
-  - `前端房間與對戰介面`
+  - `後端房間與對戰 API 介面`
 
 #### Wave 2
 
 - 平行分析介面：
-  - `後端房間與對戰 API 介面`
+  - `房間與對戰狀態資料介面`
 
 委派順序：
-1. 先呼叫 `/axb-ui-plan`
-2. 等 Wave 1 完成後，再呼叫 `/axb-api-plan`
+1. 先呼叫 `/axb-api-plan`
+2. 等 Wave 1 完成後，再呼叫 `/axb-data-plan`
 ```
 
 ## Bad Example
 
-- 這個例子是壞的，因為它忽略 `Wave` 依賴，直接先做後端分析，讓事件契約先於前端互動需求被假設。
+- 這個例子是壞的，因為它忽略 `Wave` 依賴，直接先做資料設計，讓資料模型先於事件契約被假設。
 
 ```md
 #### Wave 1
 
 - 平行分析介面：
-  - `前端房間與對戰介面`
+  - `後端房間與對戰 API 介面`
 
 #### Wave 2
 
 - 平行分析介面：
-  - `後端房間與對戰 API 介面`
+  - `房間與對戰狀態資料介面`
 
 委派順序：
-1. 先呼叫 `/axb-api-plan`
-2. 後面再補 `/axb-ui-plan`
+1. 先呼叫 `/axb-data-plan`
+2. 後面再補 `/axb-api-plan`
 ```
 
 # Rule 2 - planner／contract-owner 對應必須依分析責任邊界決定
 
 - Level: `MUST`
 - `axb-system-analysis` 必須依每個系統介面的主要分析責任與產物邊界決定其委派對象或承接者，而不是只看名稱中是否出現某個技術詞。
-- 玩家可見流程、畫面狀態、互動節奏、資訊揭露與錯誤回饋，應委派給 `/axb-ui-plan`。
+- 玩家可見流程、畫面狀態、互動節奏、資訊揭露與錯誤回饋，已由 PM 的 `/axb-ui-plan` 於 plan 階段產出（`ui/ui-plan.md` 與靜態雛形）；`axb-system-analysis` 不再委派 `/axb-ui-plan`，改以審閱既有 UI 產物在目前技術邊界下是否可落地，必要時回報缺口。
 - 實體、欄位、狀態持有、生命週期、資料關聯與儲存責任，應委派給 `/axb-data-plan`。
 - API 契約、事件協議、請求回應形狀、狀態轉移入口與錯誤碼語意，應委派給 `/axb-api-plan`。
-- 終端使用者／操作者可見的指令、flags、stdout/stderr 與 exit-code 契約（CLI 介面），沒有對應的 analysis planner：不以 `/axb-api-plan`、`/axb-data-plan` 或 `/axb-ui-plan` 承接，而是以 contract owner `/axb-dsl-refine` 為承接者，於交付時明文交棒。
+- 終端使用者／操作者可見的指令、flags、stdout/stderr 與 exit-code 契約（CLI 介面），沒有對應的 analysis planner：不以 `/axb-api-plan` 或 `/axb-data-plan` 承接，而是以 contract owner `/axb-dsl-refine` 為承接者，於交付時明文交棒。
 - 若某個介面同時涉及多種責任，應回到 `plan.md` 的介面切分重新判斷是否需要拆分，而不是把同一介面同時丟給多個 planner。
 
 ## Good Example
@@ -60,17 +60,17 @@
 - 這個例子是好的，因為它是依分析責任分流，而不是先看技術名稱。
 
 ```md
-1. `前端配對與對戰介面`
-   - 主要介面：畫面狀態、角色標示、操作回饋
-   - 委派：`/axb-ui-plan`
-
-2. `房間與對戰狀態資料介面`
+1. `房間與對戰狀態資料介面`
    - 主要介面：Room、Game、Guess 狀態持有與生命週期
    - 委派：`/axb-data-plan`
 
-3. `後端即時事件契約介面`
+2. `後端即時事件契約介面`
    - 主要介面：join/create、ready、start、guess、broadcast
    - 委派：`/axb-api-plan`
+
+3. `前端配對與對戰介面`
+   - 主要介面：畫面狀態、角色標示、操作回饋
+   - 承接：PM 已以 `/axb-ui-plan` 產出 `ui/ui-plan.md` 與靜態雛形；`axb-system-analysis` 不委派，僅審閱其可落地性
 
 4. `CLI 指令與退出碼介面`
    - 主要介面：指令、flags、stdout/stderr 與 exit-code 契約
@@ -82,8 +82,8 @@
 - 這個例子是壞的，因為它把同一個介面重複丟給多個 planner，且分流理由只來自技術詞，不是責任邊界。
 
 ```md
-1. `前端配對與對戰介面`
-   - 委派：`/axb-ui-plan`、`/axb-api-plan`
+1. `後端配對與對戰介面`
+   - 委派：`/axb-data-plan`、`/axb-api-plan`
    - 理由：裡面也有 socket 事件
 ```
 

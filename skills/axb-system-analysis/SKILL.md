@@ -1,12 +1,12 @@
 ---
 name: axb-system-analysis
-description: 在 plan package 的 `spec.md`、`research.md`、`truth-delta.md` 與 `specs/truth/**` 基礎上，盤點本次需求涉及的系統介面與分析 wave，產出 plan-side `plan.md`，並把 plan package、truth root、truth-delta path 傳給 `/axb-api-plan`、`/axb-data-plan`、`/axb-ui-plan`；CLI 介面沒有對應的 analysis planner，改交由其 contract owner `/axb-dsl-refine` 承接。
+description: 在 plan package 的 `spec.md`、`research.md`、`truth-delta.md` 與 `specs/truth/**` 基礎上，盤點本次需求涉及的系統介面與分析 wave，產出 plan-side `plan.md`，並把 plan package、truth root、truth-delta path 傳給 `/axb-api-plan`、`/axb-data-plan`；前端不重做 `/axb-ui-plan`（UI 已由 PM 產出），僅審閱既有 `ui/ui-plan.md` 與靜態雛形的可落地性；CLI 介面沒有對應的 analysis planner，改交由其 contract owner `/axb-dsl-refine` 承接。
 disable-model-invocation: true
 ---
 
 # System Analysis
 
-`axb-system-analysis` 是 planner orchestration skill。它本身不修改 truth，但必須把本輪 plan 與既有 truth 的差異帶給後續 owner，避免 API、data、UI 分析各自推理不同版本。
+`axb-system-analysis` 是 planner orchestration skill。它本身不修改 truth，但必須把本輪 plan 與既有 truth 的差異帶給後續 owner，避免 API、data 分析各自推理不同版本。前端 UI 規劃已由 PM 的 `/axb-ui-plan` 完成，本 skill 不重做，僅審閱既有 UI 產物在目前技術邊界下是否可落地。
 
 # SOP
 
@@ -26,11 +26,11 @@ disable-model-invocation: true
 ## Phase 3 -- 規劃分析 Wave 並產出 plan
 
 1. READ 需要判斷先後與平行分組時，讀取 `rules/Wave依賴排序與平行分組判準.md`。
-2. THINK 依介面依賴、truth 變更風險與可平行程度安排 Wave，確認每個介面至少被一個後續 planner 承接；若為 CLI 介面（沒有對應的 analysis planner），改為確認已交棒給其 contract owner `/axb-dsl-refine`。
+2. THINK 依介面依賴、truth 變更風險與可平行程度安排 Wave，確認每個介面都有明確的後續承接方式：API 介面由 `/axb-api-plan`、資料介面由 `/axb-data-plan` 承接；前端介面不委派 `/axb-ui-plan`，改以審閱 PM 既有 `ui/**` 產物承接；若為 CLI 介面（沒有對應的 analysis planner），則於交付時交棒給其 contract owner `/axb-dsl-refine`。
 3. WRITE 將系統介面盤點、Wave、分析重點與委派理由寫入 `specs/plans/NNN-<slug>/plan.md`。
 
 ## Phase 4 -- 委派 planner 並交付
 
 1. READ 需要判斷 planner 對應時，讀取 `rules/分析介面委派與planner對應判準.md`。
-2. DELEGATE 依 Wave 順序將 API 介面交給 `/axb-api-plan`、資料介面交給 `/axb-data-plan`、UI 介面交給 `/axb-ui-plan`；每次 handoff 都必須包含 plan package path、truth root、truth-delta path、介面名稱與分析重點。CLI 介面沒有對應的 analysis planner，不在本 phase 委派，改於交付時明文交棒給下一 phase 的 contract owner `/axb-dsl-refine`。
+2. DELEGATE 依 Wave 順序將 API 介面交給 `/axb-api-plan`、資料介面交給 `/axb-data-plan`；每次 handoff 都必須包含 plan package path、truth root、truth-delta path、介面名稱與分析重點。前端介面不委派 `/axb-ui-plan`（UI 規劃已由 PM 完成）：若本次涉及前端，僅審閱 PM 交付的既有 `ui/ui-plan.md` 與靜態雛形，確認在目前技術邊界下可落地。CLI 介面沒有對應的 analysis planner，不在本 phase 委派，改於交付時明文交棒給下一 phase 的 contract owner `/axb-dsl-refine`。
 3. WRITE 向使用者回報 `plan.md`、系統介面數量、Wave 數量、委派到哪些 planner（含交棒給 `/axb-dsl-refine` 的 CLI 介面），以及是否可進入 `/axb-dsl-refine` 或 `/axb-tasks`。

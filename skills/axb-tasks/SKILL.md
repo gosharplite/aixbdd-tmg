@@ -42,4 +42,5 @@ disable-model-invocation: true
 ## Phase 5 -- 輸出並驗證 tasks.md
 
 1. WRITE 依 template 骨架輸出 `specs/plans/NNN-<slug>/tasks.md`。
-2. READ 回頭檢查：任務皆為 `- [ ] T###`、truth-delta 已納入 Core Inputs、沒有 Impact Audit phase、有新增技術時 Setup 寫清套件名與 smoke-test、Foundational 每則有「只做／不做」、Phase 3 已集中 ALIGN / REMOVE / RED、Feature phase 不含 `[BDD-RED]` / `[BDD-ALIGN]` / `[BDD-REMOVE]`、每個 Feature phase 有 `Test Scope`、truth 路徑都指向 `specs/truth/**`；若不符合，立即修正。
+2. READ 依 `rules/Pre-Delivery覆蓋檢驗與孤立產物盤點判準.md` 執行全量覆蓋掃描（Pre-Delivery Orphan Coverage Sweep）：確認 `truth-delta.md` 非 NOOP 項目、`research.md` 已拍板 Decisions、與 `specs/truth/techstack.md` 本輪異動章節，皆已被 task 的 `Read` 引用或由具體 task 直接交付；若發現孤立產物，依判準補齊 task 或 `Read` 參照後再重跑掃描。掃描斷言細節以該 rule 檔為準，不在本 SOP 重述。
+3. READ 回頭檢查格式：任務皆為 `- [ ] T###`、truth-delta 已納入 Core Inputs、沒有 Impact Audit phase、有新增技術時 Setup 寫清套件名與 smoke-test、Foundational 每則有「只做／不做」、Phase 3 已集中 ALIGN / REMOVE / RED、Feature phase 不含 `[BDD-RED]` / `[BDD-ALIGN]` / `[BDD-REMOVE]`、每個 Feature phase 有 `Test Scope`、truth 路徑都指向 `specs/truth/**`；若不符合，立即修正。

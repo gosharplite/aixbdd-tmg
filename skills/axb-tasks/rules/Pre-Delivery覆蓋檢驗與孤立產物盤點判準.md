@@ -2,12 +2,13 @@
 
 - Level: `MUST`
 - 在完成 `tasks.md` 撰寫後、正式交付前，必須盤點本輪所有輸入產物與拍板決策，確保沒有任何決策或真實現況成為未被消費的孤立產物（Orphaned Artifacts）。
-- 下游 `/axb-implement` 受限於最小上下文原則（`技術參照載入與最小上下文判準.md`），實作 subagent 只讀取 task 的 `Read` 與 phase `Shared Must Read`，不得自行通篇預讀 `research.md` 或其他 truth。因此未被 task `Read` 引用或直接交付的項目，在實作層形同消失。
+- 下游 `/axb-implement` 受限於最小上下文原則（`skills/axb-implement/rules/技術參照載入與最小上下文判準.md`），實作 subagent 只讀取 task 的 `Read` 與 phase `Shared Must Read`，不得自行通篇預讀 `research.md` 或其他 truth。因此未被 task `Read` 引用或直接交付的項目，在實作層形同消失。
 - 具體掃描與斷言項目包含：
   1. **`truth-delta.md` 非 NOOP 項目**：本輪所有標記為 `ADD`、`MODIFY`、`DELETE` 的 truth rows（包含 API contracts, data models, techstack, interface features/dsl），必須 100% 被分配至對應 phase 的 task 處理（Phase 1 Setup、Phase 2 Foundational、Phase 3 Test Alignment 或 Phase 4 Feature）。
   2. **`research.md` 已拍板 Decisions**：所有規範性、演算法、架構或選型決策，必須至少被一個 task 的 `Read` 所引用（例如 `Read: research.md -> Decision 3`），或由具體 task 直接交付；負向決策（如排除某套件）若構成實作約束，應在相關 task 的 `Boundary` 或 `Read` 明示。
   3. **`specs/truth/techstack.md` 新增或異動章節**：涉及編譯參數、版本號注入（如 `VERSION` ldflags）、測試輔助目標（如 `make verify-no-test-sleep`）、測試執行器指令等，必須被 Setup 或 Foundational 的建置/驗證 task 的 `Read` 所引用並具體落地。
 - **NOOP 項目豁免**：`truth-delta.md` 中的 `NOOP` 項目屬於已檢查無須變更之審計記錄，不得為其建立實作任務。
+- **空集合豁免**：若本輪無 `research.md`，或該檔無任何已拍板 Decisions，該項視為空集合，掃描直接通過；不得為其虛構決策或無中生有地建立任務。
 - 存在任何未涵蓋的非 NOOP truth row 或已拍板 Decision 時，`tasks.md` 判定未通過，不得交付。
 
 ## Good Example

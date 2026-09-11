@@ -18,7 +18,7 @@ In the `tellme` consuming project's Round-001 review ([tellme#5](https://github.
 Phase 3 scheduled 45 DSL step definitions under a `Parallel Hint`.
 During execution planning, a direct conflict was uncovered between concurrent subagent dispatch
 and file-sharing merge expectations across `/axb-implement` rules:
-1. `skills/axb-implement/rules/ParallelHint平行Subagent與衝突Merge判準.md` Rule 1 mandated dispatching all
+1. `skills/axb-implement/rules/ParallelHint平行Subagent與衝突Merge判準.md` (renamed by this ADR to `ParallelHint平行Subagent與同檔調度判準.md`) Rule 1 mandated dispatching all
    subagents simultaneously: *"當前 phase 有 Parallel Hint 時必須一次派出該批 subagent … 每個列出的 `[P]` task 派一個獨立 subagent"*.
 2. Rule 3 of the same file and `skills/axb-implement/rules/平行執行與檔案衝突判準.md` Rule 2 stated:
    *"Phase 3 的 `[P]` 批次即使寫同一檔，仍各派 subagent；後寫入者先讀最新檔再 merge"*.

@@ -96,11 +96,12 @@
 **Boundary**:
 - 一條 DSL 一個 task。
 - 只改該句的 stepdef / assertion / 直接依賴的 helper。
+- 落點檔案優先採獨立檔案（Zero Shared Edits 原則），消除並行寫入衝突。
 - 不寫產品碼。
 - review 啟動 subagent；本輪所有 Test Scope 不得再有 undefined step，失敗只能是 assertion 或產品行為。有 issues 就修正再 review，直到沒有任何問題。通過前不解鎖 Phase 4。
 
 **Parallel Hint**:
-- T008–T014 各派一個獨立 subagent；T015 等全部回來再啟動 subagent 來 review。
+- T008–T014 各派一個獨立 subagent（目標檔案獨立則全並行派出；若有同檔衝突則按檔分組或序列執行）；T015 等全部回來再啟動 subagent 來 review。
 
 - [ ] T008 [P] [BDD-ALIGN] `When: "{玩家}" 送出訊息 "{內容}"`
   - Read: `backend/features/steps/modules/房間聊天/操作與斷言.py`

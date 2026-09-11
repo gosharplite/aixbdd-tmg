@@ -21,13 +21,13 @@ disable-model-invocation: true
 
 1. THINK 若本輪有新增技術，建立 Phase 1 `Setup`：寫清套件名、配置、技術環境與最後的 smoke-test；不寫 DSL 語意、不寫產品行為。
 2. THINK 若本輪沒有新增技術，省略 Setup；不得把 helper、fixture 或落點骨架塞進 Setup。
-3. THINK 建立 Phase 2 `Foundational`：只建立後續實作程式、測試共用元件、入口、fixture、helper 與落點骨架；每則寫「只做／不做」。
+3. THINK 建立 Phase 2 `Foundational`：只建立後續實作程式、測試共用元件、入口、fixture、helper 與落點骨架；每則寫「只做／不做」；測試落點骨架應優先採獨立檔案設計（Zero Shared Edits 原則），為 Phase 3 並行分派消除同檔衝突。
 4. THINK Setup 與 Foundational 不得偷做 Phase 3 測試層或 Feature Green。
 
 ## Phase 3 -- 建立 Test Alignment & Implementation
 
 1. READ 讀取 `templates/tasks.md` 與 `templates/tasks.example.md`，確認 Phase 3 固定章節：`DSL 參照`、`Markers`、`Shared Must Read`、`Boundary`、`Parallel Hint`。
-2. THINK 為盤點出的每一句標 `[BDD-ALIGN]`、`[BDD-REMOVE]` 或 `[BDD-RED]`；一條 DSL 一個 `[P]` task；最後一個 task 是 subagent review。
+2. THINK 為盤點出的每一句標 `[BDD-ALIGN]`、`[BDD-REMOVE]` 或 `[BDD-RED]`；一條 DSL 一個 `[P]` task；落點優先指向獨立檔案避免並行寫入衝突；最後一個 task 是 subagent review。
 3. THINK 寫入 `DSL 參照`（每句的權威 `dsl.md` 與讀 `StepDef 實作語意` 的方法）、`Markers`、本輪要讀的句、`Boundary` 與 `Parallel Hint`。
 4. THINK 本 phase 不得安排產品碼任務。
 

@@ -18,7 +18,7 @@ three independent disconnects between upstream specifications/decisions and gene
 2. **`techstack.md` Version assertion (`VERSION=0.0.0-harness`) & `research.md` Decision 6**: Explicitly defined the version string and build parameters, but no build task read that section or bound the compile flags.
 3. **`research.md` Decision 7 (`verify-no-test-sleep`) & `techstack.md` declared `verify` target**: Adopted in technical research and declared in techstack truth, but the Makefile setup task (T002) omitted that target.
 
-Because `/axb-implement` operates under a strict minimal-context rule (`技術參照載入與最小上下文判準.md`), subagents only read what is listed in task `Read` and phase `Shared Must Read`. Upstream decisions not linked in `tasks.md` are never loaded into downstream context and are silently lost during implementation.
+Because `/axb-implement` operates under a strict minimal-context rule (`skills/axb-implement/rules/技術參照載入與最小上下文判準.md`), subagents only read what is listed in task `Read` and phase `Shared Must Read`. Upstream decisions not linked in `tasks.md` are never loaded into downstream context and are silently lost during implementation.
 
 ## Problem
 

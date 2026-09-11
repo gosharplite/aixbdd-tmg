@@ -52,11 +52,11 @@
   - 只做：用 `websockets.connect` 包開線／關線；context 記「玩家名 → 連線」；scenario 結束要關線。
   - 不做：不送聊天內容，不斷言誰看得到什麼。
 
-- [ ] T006 預留房間聊天 stepdef 落點
+- [ ] T006 預留房間聊天 stepdef 獨立落點骨架（Zero Shared Edits 原則）
   - Read:
-    - `backend/features/steps/modules/房間聊天/操作與斷言.py`
-  - 只做：確認 Phase 3 只寫進這個檔，必要時建空殼。
-  - 不做：不寫 ALIGN / REMOVE / RED 語意。
+    - `backend/features/steps/modules/房間聊天/`
+  - 只做：在 `backend/features/steps/modules/房間聊天/` 下建立 stepdef 獨立落點骨架檔案（`when_send_msg.py`、`then_both_see_chat.py`、`then_opponent_see_history.py`、`given_single_wait.py`、`when_empty_msg.py`、`then_reject_send.py`、`then_no_prior_history.py`），使後續 Phase 3 並行任務目標檔案互斥。
+  - 不做：不寫 ALIGN / REMOVE / RED 語意，不寫 helper 邏輯。
 
 - [ ] T007 建立雙玩家房間測試 fixture 入口
   - Read:
@@ -91,33 +91,38 @@
   -> `Then: 這次聊天送出被拒絕`
   -> `Then: "{玩家}" 看不到先前的聊天訊息`
 - `truth-delta.md` -> `/axb-dsl-refine` 有對應 ADD / MODIFY / DELETE 的句
-- `backend/features/steps/modules/房間聊天/操作與斷言.py`
+- `backend/features/steps/modules/房間聊天/`（各 stepdef 獨立落點骨架）
 
 **Boundary**:
 - 一條 DSL 一個 task。
 - 只改該句的 stepdef / assertion / 直接依賴的 helper。
+- 落點檔案優先採獨立檔案（Zero Shared Edits 原則，SHOULD），使並行派出具備互斥寫入目標。
 - 不寫產品碼。
 - review 啟動 subagent；本輪所有 Test Scope 不得再有 undefined step，失敗只能是 assertion 或產品行為。有 issues 就修正再 review，直到沒有任何問題。通過前不解鎖 Phase 4。
 
 **Parallel Hint**:
-- T008–T014 各派一個獨立 subagent；T015 等全部回來再啟動 subagent 來 review。
+- T008–T014 各派一個獨立 subagent，一次派出整批並行執行（目標檔案獨立，符合 Zero Shared Edits）；T015 等全部回來再啟動 subagent 來 review。
 
 - [ ] T008 [P] [BDD-ALIGN] `When: "{玩家}" 送出訊息 "{內容}"`
-  - Read: `backend/features/steps/modules/房間聊天/操作與斷言.py`
+  - Read: `backend/features/steps/modules/房間聊天/when_send_msg.py`
 
 - [ ] T009 [P] [BDD-ALIGN] `Then: "{玩家}" 與 "{玩家}" 都看得到以下聊天內容：`
-  - Read: `backend/features/steps/modules/房間聊天/操作與斷言.py`
+  - Read: `backend/features/steps/modules/房間聊天/then_both_see_chat.py`
 
 - [ ] T010 [P] [BDD-REMOVE] `Then: 對手仍看得到離房前訊息`
-  - Read: `backend/features/steps/modules/房間聊天/操作與斷言.py`
+  - Read: `backend/features/steps/modules/房間聊天/then_opponent_see_history.py`
 
 - [ ] T011 [P] [BDD-RED] `Given: "{玩家}" 在房間內單人等待`
+  - Read: `backend/features/steps/modules/房間聊天/given_single_wait.py`
 
 - [ ] T012 [P] [BDD-RED] `When: "{玩家}" 嘗試送出空白訊息`
+  - Read: `backend/features/steps/modules/房間聊天/when_empty_msg.py`
 
 - [ ] T013 [P] [BDD-RED] `Then: 這次聊天送出被拒絕`
+  - Read: `backend/features/steps/modules/房間聊天/then_reject_send.py`
 
 - [ ] T014 [P] [BDD-RED] `Then: "{玩家}" 看不到先前的聊天訊息`
+  - Read: `backend/features/steps/modules/房間聊天/then_no_prior_history.py`
 
 - [ ] T015 subagent review (phase quality gate)
 

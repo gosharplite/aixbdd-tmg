@@ -117,3 +117,30 @@ Phase 4C: [REGRESSION] 跑 Test Scope
 ```md
 - [ ] T020 [CODE-REMOVE] 移除舊功能
 ```
+
+# Rule 5 - Phase 3 平行任務應優先規劃獨立落點檔案（Zero Shared Edits 原則）
+
+- Level: `SHOULD`
+- Phase 2 `Foundational` 在預留 step definition 落點骨架，以及 Phase 3 在規劃待處理 DSL 任務時，應優先採用獨立檔案架構（例如一任務一檔案，善用 Go `init()` 自動註冊、pytest-bdd 獨立模組或 step 檔案分割），達成「零共享寫入衝突（Zero Shared Edits）」。
+- 獨立落點檔案使 Phase 3 的 `Parallel Hint` 能真正無鎖、無競爭地全並行 dispatch，最大化並行吞吐量。
+- 若因語言或既有架構限制必須多條 DSL 寫入同一實體檔案，任務規劃應明確標示該共用檔案，以利 `/axb-implement` 進行同檔序列調度，避免 Lost Update。
+
+## Good Example
+
+- 這個例子是好的，因為落點採一任務一檔案，為平行派出消除寫入衝突。
+
+```md
+Foundational 建立 `features/steps/` 目錄骨架。
+Phase 3 任務指向獨立檔案：
+- [ ] T008 [P] [BDD-ALIGN] `When: "{玩家}" 送出訊息 "{內容}"` -> Read: `steps/when_send_msg.go`
+- [ ] T009 [P] [BDD-ALIGN] `Then: 看得到聊天內容` -> Read: `steps/then_recv_msg.go`
+各 subagent 目標檔案互斥，可安全全平行派出。
+```
+
+## Bad Example
+
+- 這個例子是壞的，因為明明具備獨立切檔條件，卻人為把大量並行任務塞進同一實體檔案。
+
+```md
+專案使用 Go，明明可用 `init()` 達成單 stepdef 獨立檔案，卻把 15 個 Phase 3 並行任務全部指向同一個 `chat_steps.go`，人為製造檔案寫入競爭。
+```

@@ -3,7 +3,7 @@
 - Level: `MUST`
 - 若 `tasks.md` 當前 phase 含 `Parallel Hint`，本輪任務集就是 Hint 列出的 `[P]` tasks，不是只拿第一個已解鎖 task。
 - **目標檔案獨立時全並行**：若該批 tasks 寫入的目標檔案彼此獨立（Zero Shared Edits 原則），每個列出的 `[P]` task 各派一個獨立 subagent，一次派出整批並行執行。
-- **同檔衝突時按檔序列**：若多個 `[P]` tasks 寫入同一目標檔案，為避免 Lost Update 與寫入競爭，orchestrator 必須按目標檔案分組或循序排程（同檔任務序列執行，確保前置寫入落盤後後續 subagent 才啟動），不得在無鎖狀態下讓多個 subagent 同時並行寫入同一實體檔案。
+- **同檔衝突時按檔調度**：若多個 `[P]` tasks 寫入同一目標檔案，為避免 Lost Update 與寫入競爭，orchestrator 必須按目標檔案序列排程（同檔任務序列執行，確保前置寫入落盤後後續 subagent 才啟動讀取），或將同檔任務合併由單一 subagent 循序處理；不得在無鎖狀態下讓多個 subagent 同時並行寫入同一實體檔案。
 - review task 等該批全部回來後才啟動，不得與該批平行。
 
 ## Good Example

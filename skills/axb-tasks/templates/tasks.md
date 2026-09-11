@@ -91,20 +91,21 @@
 **Boundary**:
 - 一條 DSL 一個 task。
 - 只改該句的 stepdef / assertion / 直接依賴的 helper。
-- 落點檔案優先採獨立檔案（Zero Shared Edits 原則），消除並行寫入衝突。
+- 落點檔案應儘量採獨立檔案（Zero Shared Edits 原則，SHOULD），消除並行寫入衝突。
 - 不寫產品碼。
 - review 啟動 subagent；本輪所有 Test Scope 不得再有 undefined step，失敗只能是 assertion 或產品行為。有 issues 就修正再 review，直到沒有任何問題。通過前不解鎖 Phase 4。
 
 **Parallel Hint**:
-- T{{PHASE3_FIRST_DSL_TASK}}–T{{PHASE3_LAST_DSL_TASK}} 各派一個獨立 subagent（目標檔案獨立則全並行派出；若有同檔衝突則按檔分組或序列執行）；T{{PHASE3_REVIEW_TASK}} 等全部回來再啟動 subagent 來 review。
+- T{{PHASE3_FIRST_DSL_TASK}}–T{{PHASE3_LAST_DSL_TASK}} 各派一個獨立 subagent（依 `ParallelHint平行Subagent與同檔調度判準.md` 調度）；T{{PHASE3_REVIEW_TASK}} 等全部回來再啟動 subagent 來 review。
 
 - [ ] T{{ALIGN_TASK_ID}} [P] [BDD-ALIGN] `{{ALIGN_DSL_SENTENCE}}`
-  - Read: `{{ALIGN_EXISTING_STEPDEF_PATH}}`
+  - Read: `{{ALIGN_EXISTING_STEPDEF_PATH}}`（優先各 task 獨立落點以利並行 dispatch）
 
 - [ ] T{{REMOVE_TASK_ID}} [P] [BDD-REMOVE] `{{REMOVE_DSL_SENTENCE}}`
-  - Read: `{{REMOVE_EXISTING_STEPDEF_PATH}}`
+  - Read: `{{REMOVE_EXISTING_STEPDEF_PATH}}`（優先各 task 獨立落點以利並行 dispatch）
 
 - [ ] T{{RED_TASK_ID}} [P] [BDD-RED] `{{RED_DSL_SENTENCE}}`
+  - Read: `{{RED_STEPDEF_LANDING_PATH}}`（優先各 task 獨立落點以利並行 dispatch）
 
 - [ ] T{{PHASE3_REVIEW_TASK}} subagent review (phase quality gate)
 

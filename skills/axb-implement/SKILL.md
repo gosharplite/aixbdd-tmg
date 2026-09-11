@@ -11,7 +11,7 @@ disable-model-invocation: true
 ## Operating Principles
 
 - by default 就是 don't stop until deliver / One-Shot：從第一個已解鎖 task 做到目標 plan 全部 `[X]`。使用者不必再寫這句。
-- One-Shot 的一輪任務集恰好是 1 個已解鎖 task；有 `Parallel Hint` 時改為 Hint 列出的 `[P]` 批次（若目標檔案獨立則全並行派出；若有同檔衝突則按檔分組或序列執行）。One-Shot 不是把後面的序列 task 一次攤開。
+- One-Shot 的一輪任務集恰好是 1 個已解鎖 task；有 `Parallel Hint` 時改為 Hint 列出的 `[P]` 批次（依 `rules/ParallelHint平行Subagent與同檔調度判準.md` 調度）。One-Shot 不是把後面的序列 task 一次攤開。
 - 做完一個任務集就驗證，立刻回寫 `tasks.md` 的 `[X]`，再重算下一筆。未回寫不得開下一個任務集。
 - 嚴格執行不能跳步驟。`don't stop until deliver` 不是跳步驟的許可。
 - Feature phase 仍序列。`[BDD-GREEN]`、`[BDD-REFACTOR]` 才委派 `/axb-bdd`，並把該 phase 的 `Test Scope` 當範疇。
@@ -37,7 +37,7 @@ disable-model-invocation: true
 ## Phase 3 -- 收斂本輪任務集（不能跳步驟）
 
 1. READ 讀取 `rules/嚴格禁止跳步驟判準.md` 與 `rules/平行執行與檔案衝突判準.md`，確認本輪任務集邊界。
-2. READ 若 `tasks.md` 當前 phase 含 `Parallel Hint`，讀取 `rules/ParallelHint平行Subagent與衝突Merge判準.md`。
+2. READ 若 `tasks.md` 當前 phase 含 `Parallel Hint`，讀取 `rules/ParallelHint平行Subagent與同檔調度判準.md`。
 3. THINK 收斂本輪任務集：有 `Parallel Hint` 則為 Hint 列出的 `[P]` 批次；否則恰好 1 個已解鎖 task。
 4. THINK 收斂執行模式：Setup 與 Foundational 直接實作並停在該則「只做／不做」；Phase 3 的 ALIGN / REMOVE / RED 走 subagent 測試層；review 走 review 迴圈；`[BDD-GREEN]` / `[BDD-REFACTOR]` 委派 `/axb-bdd`；`[CODE-REMOVE]`、`[REGRESSION]` 直接實作或直接驗證。
 
@@ -47,7 +47,7 @@ disable-model-invocation: true
 2. READ 依當前任務集的精確參照載入必要 plan artifacts、truth feature、同模組 DSL、實際列出的介面根共用 DSL rows 與既有自動化測試落點；不得掃描或預讀其他模組 DSL。
 3. READ 若本輪修改受憲法治理的 artifact 或與 truth specs 發生衝突，讀取 `.agents/constitution/CONSTITUTION.md`、`.agents/constitution/shared.md` 與對應憲法檔。
 4. READ 讀取 `rules/自主決策與阻塞處理判準.md`，確認規格缺口、局部矛盾或環境阻礙時的決策優先序。
-5. DELEGATE 若本輪是 `Parallel Hint` 批次，為每個 `[P]` task 派出獨立 subagent，prompt 指向該 plan `tasks.md` 的對應任務（若目標檔案獨立則全並行派出；若有同檔衝突則按檔分組或序列執行，確保前置寫入落盤後後續 subagent 才讀最新檔寫入）；全部回來後執行 review 迴圈。
+5. DELEGATE 若本輪是 `Parallel Hint` 批次，依 `rules/ParallelHint平行Subagent與同檔調度判準.md` 調度 subagent（prompt 指向該 plan `tasks.md` 的對應任務）；全部回來後執行 review 迴圈。
 6. DELEGATE 若本輪是 `[BDD-GREEN]` 或 `[BDD-REFACTOR]`，呼叫 `/axb-bdd` 的單一 requested step，傳入 `Test Scope`、action、truth rows、模組 DSL 與實際使用的共用 DSL rows。
 7. WRITE 若 task 不帶上述 marker，依 task marker 完成本輪所需的程式、設定、文件或測試變更；不得越出本輪任務與 phase boundary。
 

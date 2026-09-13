@@ -24,8 +24,8 @@ disable-model-invocation: true
 1. READ 讀取使用者需求、plan package 的 `spec.md`、已確認的 `features/acceptance/**`、既有 `ui/**`，以及與 UI 有關的既有 `specs/truth/contracts/**`、`specs/truth/features/**`。
 2. THINK 依本輪介面種類與互動表面選定 medium（HTML mode／terminal mode／skipped）；若選 skipped，回報後停止，不產出 ui-plan。
 3. READ 依選定 medium 讀取對應的 template 與 rule，確認 plan-side UI artifact 與雛形的完成樣貌：
-   - HTML mode：`templates/ui-plan.md`、`templates/ui-plan.example.md`、`templates/prototype-entry.html`、`templates/prototype-entry.example.html`、`templates/prototype-screen.html`、`templates/prototype-screen.example.html`、`rules/高保真靜態頁面切分與Flow覆蓋判準.md` 與 `rules/靜態網站雛形與實作計畫邊界判準.md`。
-   - terminal mode：`templates/ui-plan.terminal.md`、`templates/ui-plan.terminal.example.md`、`templates/prototype-terminal-entry.txt`、`templates/prototype-terminal-entry.example.txt`、`templates/prototype-terminal-screen.txt`、`templates/prototype-terminal-screen.example.txt`、`rules/高保真靜態頁面切分與Flow覆蓋判準.md` 與 `rules/靜態網站雛形與實作計畫邊界判準.md`。
+   - HTML mode：`templates/ui-plan.md`、`templates/ui-plan.example.md`、`templates/prototype-entry.html`、`templates/prototype-entry.example.html`、`templates/prototype-screen.html`、`templates/prototype-screen.example.html`、`rules/高保真雛形切分與Flow覆蓋判準.md` 與 `rules/雛形與實作計畫邊界判準.md`。
+   - terminal mode：`templates/ui-plan.terminal.md`、`templates/ui-plan.terminal.example.md`、`templates/prototype-terminal-entry.txt`、`templates/prototype-terminal-entry.example.txt`、`templates/prototype-terminal-screen.txt`、`templates/prototype-terminal-screen.example.txt`、`rules/高保真雛形切分與Flow覆蓋判準.md` 與 `rules/雛形與實作計畫邊界判準.md`。
 4. DELEGATE 若缺口會改變使用者可見流程、畫面責任、互動入口、錯誤狀態或與 truth 的對齊方式，呼叫 `/axb-clarify`；未收斂前停止。
 
 ## Phase 2 -- 產出 UI plan 與雛形

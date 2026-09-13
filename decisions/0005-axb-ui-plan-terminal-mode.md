@@ -24,8 +24,8 @@ existing governed surface for a new medium/instance once: **PR #2** added `Inter
 ## Problem
 
 `axb-ui-plan` is HTML-hardwired: SKILL Phase 1 mandates reading `prototype-*.html`, Phase 2 writes
-`ui/*.html`, and both rule files (`靜態網站雛形與實作計畫邊界判準.md`,
-`高保真靜態頁面切分與Flow覆蓋判準.md`) name a *website/page*. A CLI that ships a TUI therefore has
+`ui/*.html`, and both rule files (`雛形與實作計畫邊界判準.md`,
+`高保真雛形切分與Flow覆蓋判準.md`) name a *website/page*. A CLI that ships a TUI therefore has
 no governed, PM-reviewable, plan-side UX artifact — the framework cannot express one, and
 `axb-system-analysis` routes the whole CLI end to `/axb-dsl-refine` with no UX review step.
 
@@ -56,9 +56,9 @@ Amend `axb-ui-plan` with a **terminal mode**; do **not** add an `axb-tui-plan` s
 - Mode name: **terminal mode** ("cli mode" collides with the plain-CLI skip case; "TUI" would need a
   glossary term).
 - Medium format: separate `ui/screens/*.txt` frames (verbatim rendering, no Markdown reflow).
-- **Rule filenames retained** (`靜態網站雛形…`, `高保真靜態頁面…`): the content is generalized to both
-  media and each file states that the web-original scope is kept in the name; renaming is deferred as
-  churn with no behavioral benefit.
+- **Rule filenames generalized** (`靜態網站雛形與實作計畫邊界判準.md` → `雛形與實作計畫邊界判準.md`;
+  `高保真靜態頁面切分與Flow覆蓋判準.md` → `高保真雛形切分與Flow覆蓋判準.md`): renamed in this PR so the
+  filenames match their now medium-general content.
 
 ## Alternatives considered
 

@@ -1,7 +1,7 @@
 # Rule 1 - 多畫面雛形固定以入口畫面作為入口
 
 - Level: `MUST`
-- 本判準同時涵蓋 web 與 terminal 兩種 medium；檔名沿用最初以 web 為範圍的命名，內容已一般化為兩種 medium。
+- 本判準同時涵蓋 web 與 terminal 兩種 medium。
 - 若 feature 的真實產品流程需要跨畫面，`axb-ui-plan` 必須固定使用入口畫面作為雛形入口：
   - web：`ui/index.html`。
   - terminal：`ui/screens/entry.txt`。

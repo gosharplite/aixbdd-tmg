@@ -1,0 +1,12 @@
+┌─ tell-me-go · 執行中 ────────────────────────────────────────────┐
+│ deploy to staging with version 015                               │
+│                                                                  │
+│  執行步驟                                  最近輸出              │
+│  ✓ 建置 binary                              build ok (2.1s)      │
+│  ✓ 上傳 artifact                            upload ok (0.8s)     │
+│  ▸ 啟動 staging 服務                        waiting...           │
+│                                                                  │
+│                                                                  │
+│  model: same-as-session                     tokens: 12,341/1M    │
+│  Esc 中止 · ? 說明                                               │
+└──────────────────────────────────────────────────────────────────┘

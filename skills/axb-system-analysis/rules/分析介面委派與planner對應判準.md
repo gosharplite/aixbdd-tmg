@@ -52,7 +52,7 @@
 - 玩家可見流程、畫面狀態、互動節奏、資訊揭露與錯誤回饋，已由 PM 的 `/axb-ui-plan` 於 plan 階段產出（`ui/ui-plan.md` 與靜態雛形）；`axb-system-analysis` 不再委派 `/axb-ui-plan`，改以審閱既有 UI 產物在目前技術邊界下是否可落地，必要時回報缺口。
 - 實體、欄位、狀態持有、生命週期、資料關聯與儲存責任，應委派給 `/axb-data-plan`。
 - API 契約、事件協議、請求回應形狀、狀態轉移入口與錯誤碼語意，應委派給 `/axb-api-plan`。
-- 終端使用者／操作者可見的指令、flags、stdout/stderr 與 exit-code 契約（CLI 介面），沒有對應的 analysis planner：不以 `/axb-api-plan` 或 `/axb-data-plan` 承接，而是以 contract owner `/axb-dsl-refine` 為承接者，於交付時明文交棒。
+- 終端使用者／操作者可見的指令、flags、stdout/stderr 與 exit-code 契約（CLI 介面），沒有對應的 analysis planner：不以 `/axb-api-plan` 或 `/axb-data-plan` 承接，而是以 contract owner `/axb-dsl-refine` 為承接者，於交付時明文交棒。若該 CLI 出貨互動式 TUI，其終端 UX 表面（畫面、keybinding、狀態轉移）比照前端，已由 PM 的 `/axb-ui-plan`（terminal mode）產出；`axb-system-analysis` 僅審閱其可落地性，不重做、不委派。
 - 若某個介面同時涉及多種責任，應回到 `plan.md` 的介面切分重新判斷是否需要拆分，而不是把同一介面同時丟給多個 planner。
 
 ## Good Example
@@ -75,6 +75,10 @@
 4. `CLI 指令與退出碼介面`
    - 主要介面：指令、flags、stdout/stderr 與 exit-code 契約
    - 承接：`/axb-dsl-refine`（CLI contract owner；無對應 analysis planner）
+
+5. `CLI 互動式 TUI 介面`
+   - 主要介面：終端畫面、keybinding、狀態轉移
+   - 承接：PM 已以 `/axb-ui-plan`（terminal mode）產出 `ui/ui-plan.md` 與 `ui/screens/*.txt`；`axb-system-analysis` 不委派，僅審閱其可落地性
 ```
 
 ## Bad Example

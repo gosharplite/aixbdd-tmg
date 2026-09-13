@@ -19,7 +19,7 @@ Most AI dev workflows blur PM/RD responsibilities (e.g., developers end up "mind
 1. `/axb-constitution` — set artifact governance rules
 2. `/axb-specify` — create a numbered plan package with `spec.md` + checklist
 3. `/axb-clarify-over-specs` — (optional) interactive requirement clarification
-4. **Parallel**: PM runs `/axb-spec-by-example` (acceptance Gherkin) + `/axb-ui-plan` (HTML prototypes); RD runs `/axb-technical-research`
+4. **Parallel**: PM runs `/axb-spec-by-example` (acceptance Gherkin) + `/axb-ui-plan` (HTML prototypes for a web interface; rendered terminal frames for a CLI TUI); RD runs `/axb-technical-research`
 5. `/axb-system-analysis` — orchestrates `/axb-api-plan`, `/axb-data-plan` via dependency waves
 6. `/axb-dsl-refine` — split acceptance criteria into executable front/back-end Gherkin + DSL
 7. `/axb-tasks` — generate BDD task list (`tasks.md`)
@@ -31,7 +31,7 @@ Supporting skills: `/axb-clarify` (user interviews), `/axb-truth-delta` (truth c
 
 When developing a CLI application (no web frontend or HTTP/REST API), the workflow is streamlined:
 
-1. **Skip `/axb-ui-plan`**: No web UI or HTML mockups are created. Terminal interactions (commands, flags, arguments, exit codes, stdin/stdout/stderr) are defined directly as Gherkin acceptance scenarios in `/axb-spec-by-example`.
+1. **Skip `/axb-ui-plan` for a plain CLI**: For a line-oriented CLI (commands, flags, arguments, exit codes, stdin/stdout/stderr) no web UI or HTML mockups are created; terminal interactions are defined directly as Gherkin acceptance scenarios in `/axb-spec-by-example`. **Exception:** a CLI that ships a rich terminal UI (TUI) runs `/axb-ui-plan` in **terminal mode** — textual screens/keybindings under `ui/screens/*.txt`, still no HTML.
 2. **Lean `/axb-system-analysis`**:
    - **`/axb-api-plan`** is skipped (standalone CLIs have no OpenAPI endpoints; marked as `NOOP` in `truth-delta.md`).
    - **`/axb-data-plan`** is conditional — invoked only if the CLI manages persistent configuration (e.g. `~/.config/...`), local storage (SQLite, JSON), or complex domain state. For stateless CLI tools, it is skipped.

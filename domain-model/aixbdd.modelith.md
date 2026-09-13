@@ -43,6 +43,15 @@ The lifecycle state of a `PlanPackage`.
 | `active` | The package is being produced — artifacts are still being written and reviewed. |
 | `delivered` | The package is frozen history — all tasks are done and verified; later rounds never modify it. |
 
+### `PrototypeMedium`
+
+The medium a `Prototype` renders in.
+
+| Value | Definition |
+| --- | --- |
+| `web` | An HTML page under `ui/*.html`, for a web / `frontend` interface. |
+| `terminal` | A rendered terminal frame under `ui/screens/*.txt`, for a `cli` interface that ships a TUI. |
+
 ## Entities
 
 ### `AcceptanceFeature`
@@ -224,7 +233,13 @@ A numbered iteration container (`NNN-<slug>` under `specs/plans/`) that holds ev
 
 ### `Prototype`
 
-One static HTML screen of the mid-fidelity prototype produced from a `UIPlan`. Prototypes cover the flows defined by the acceptance Gherkin and are the PM's reviewable stand-in for the future UI. They are plan-side artifacts, never system truth.
+One mid-fidelity prototype surface produced from a `UIPlan`, in the medium its interface calls for: an HTML page (`ui/*.html`) for a web / `frontend` interface, or a rendered terminal frame (`ui/screens/*.txt`) for a `cli` interface that ships a TUI. Prototypes cover the flows defined by the acceptance Gherkin and are the PM's reviewable stand-in for the future interface. They are plan-side artifacts, never system truth.
+
+**Attributes**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `medium` | PrototypeMedium | Whether this prototype is a web HTML page or a terminal frame. |
 
 **Invariants**
 
@@ -332,7 +347,7 @@ The per-`PlanPackage` ledger (`truth-delta.md`) recording every truth change of 
 
 ### `UIPlan`
 
-The UX plan of a `PlanPackage`: screen inventory, flows, states, and error handling, produced by axb-ui-plan after the acceptance Gherkin is confirmed. Present only when the round involves a user-facing interface.
+The UX plan of a `PlanPackage`: medium (web HTML pages or terminal frames), screen inventory, flows, states, and error handling, produced by axb-ui-plan after the acceptance Gherkin is confirmed. Present only when the round involves a user-facing interface with a governed UX surface — a web frontend (HTML mode) or a `cli` interface that ships a TUI (terminal mode); a plain line-oriented CLI is skipped.
 
 **Relationships**
 
@@ -415,7 +430,7 @@ A new requirement arrives; the `PM` runs the specify, spec-by-example and ui-pla
 1. axb-specify creates a fresh `PlanPackage` with its `Spec` and `TruthDelta` skeleton.
 2. The `PM` reviews the `Spec`: stories complete, criteria judgeable, boundaries covered.
 3. axb-spec-by-example renders the acceptance criteria into `AcceptanceFeature`s in business language.
-4. axb-ui-plan produces the `UIPlan` and its `Prototype`s covering the acceptance flows.
+4. axb-ui-plan selects its medium (HTML for a web interface, terminal frames for a TUI) and produces the `UIPlan` and its `Prototype`s covering the acceptance flows.
 5. The `PM` confirms the Gherkin and prototypes — the round's acceptance contract is set.
 
 **Invariants touched**
@@ -540,7 +555,7 @@ A sentence pattern appears both at the interface root and inside a module DSL. T
 
 ### CLI end carried by the contract owner
 
-A pure-CLI round inventories a terminal end. No API, data or UI planner applies, so the plan carries the end forward — at delivery, not inside a `Wave` — to its contract owner, axb-dsl-refine, which writes executable truth under the CLI `Interface`.
+A pure-CLI round inventorying a line-oriented terminal end (no TUI). No API, data or UI planner applies, so the plan carries the end forward — at delivery, not inside a `Wave` — to its contract owner, axb-dsl-refine, which writes executable truth under the CLI `Interface`.
 
 **Actors:** RD, Skill
 
@@ -548,13 +563,15 @@ A pure-CLI round inventories a terminal end. No API, data or UI planner applies,
 
 1. axb-system-analysis inventories a CLI end and records it as an `Interface` of the CLI kind.
 2. No API, data or UI planner applies; the plan records the CLI end as carried forward to its contract owner at delivery.
-3. axb-dsl-refine writes the CLI feature files under `specs/truth/features/cli/**`, reusing the module boundaries.
-4. axb-truth-delta records the CLI feature and DSL change in the round's `TruthDelta`.
+3. A `cli` interface that ships a TUI instead gets a terminal-mode `UIPlan` (no HTML) from the PM, which system-analysis reviews but does not redo or re-plan.
+4. axb-dsl-refine writes the CLI feature files under `specs/truth/features/cli/**`, reusing the module boundaries.
+5. axb-truth-delta records the CLI feature and DSL change in the round's `TruthDelta`.
 
 **Invariants touched**
 
 - **wave-covers-interfaces** — Every interface identified by an `AnalysisPlan` is either delegated to a planner in at least one `Wave` or carried forward to its contract owner at delivery.
 - **analysis-plan-never-writes-truth** — An `AnalysisPlan` orchestrates analysis only; it never creates or modifies a `TruthArtifact`.
+- **prototype-plan-side-only** — A `Prototype` is a plan-side artifact and never becomes a `TruthArtifact`.
 - **truth-single-owner** — Each `TruthArtifact` has exactly one owning `Skill`, which is the only writer allowed to change it.
 - **interface-features-nested** — Feature files live only inside a `Module`; an `Interface` root never contains feature files directly.
 - **module-boundary-reuse** — Module boundaries are reused from existing truth; a round does not invent new `Module`s while a suitable one exists.

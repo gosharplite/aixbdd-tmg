@@ -1,0 +1,16 @@
+┌─ tell-me-go · 互動提示 ──────────────────────────────────────────┐
+│ 輸入你的問題，使用 ↑/↓ 瀏覽建議、Tab 接受建議                    │
+│                                                                  │
+│  輸入                                      [編輯中]              │
+│  deploy to staging                                               │
+│  ▏                                                               │
+│                                                                  │
+│  建議                                                            │
+│  deploy to staging with version 015                              │
+│  deploy to staging and run smoke tests                           │
+│  deploy to production (needs approval)                           │
+│                                                                  │
+│                                                                  │
+│  model: same-as-session                     tokens: 12,048/1M    │
+│  Enter 送出 · Tab 接受 · ? 說明 · Ctrl+C 取消                    │
+└──────────────────────────────────────────────────────────────────┘

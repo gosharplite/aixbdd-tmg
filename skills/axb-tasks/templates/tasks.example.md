@@ -7,6 +7,8 @@
 
 - 每個**開發任務**都必須對應 `truth-delta.md` 中的 ADD / MODIFY / DELETE / NOOP 語意。
 - 本輪 `research.md` 已拍板 Decisions 與 `specs/truth/**` 非 NOOP 項目，必須在 tasks 的 `Read` 或交付目標中被全量涵蓋，不得遺留孤立產物（Pre-Delivery Orphan Coverage Sweep）。
+- 每個規範性條目（FR / NFR / SC / EC）衍生之不可觀察原子效果宣稱（Atomic Effect Claims），必須排定 `[WITNESS]` 任務覆蓋，或在專案決策面記錄為 `accepted-unwitnessed`；未經見證者絕不得以散文保證形式晉升至 truth 表面（Claim→Witness Obligation）。
+- 任務間存在先後依賴關係時，必須以 `Dependencies: T###` 明示宣告排序約束。
 - 由 `research.md` Decision 衍生的 Setup / Foundational 建置或驗證 task（如 build 參數、version、make target），不強制對應 `truth-delta.md` row。
 - Phase 1 `Setup` 只做本輪新增技術的基礎建設、技術環境與最後的 smoke-test；不寫 DSL 語意、不寫產品行為。
 - Phase 2 `Foundational` 只建立後續實作程式、測試共用元件、入口、fixture、helper 與落點骨架。
@@ -182,3 +184,41 @@
 
 - [ ] T020 [CODE-REMOVE] 移除產品碼中保留離房訊息的過期分支
 - [ ] T021 [REGRESSION] 跑 Test Scope，確認新版 truth 成立
+
+## Phase 4W: Witness Pins - websocket 斷線保證
+
+**Goal**: 為本輪 websocket 斷線與異常關閉的不變量建立單元測試見證 pin。
+
+**Shared Must Read**:
+- `specs/truth/techstack.md` -> 後端測試入口
+- `spec.md` -> NFR-002
+- `truth-delta.md` -> `/axb-technical-research`
+
+**Boundary**:
+- 只建立 websocket 異常斷線時自動釋放房間資源的單元層見證，不涉及聊天訊息呈現。
+
+- [ ] T022 [WITNESS] websocket 異常中斷時連線資源立即釋放
+  - Dependencies: T018
+  - Read:
+    - `spec.md` -> NFR-002
+    - `specs/truth/techstack.md` -> 後端測試入口
+  - Test Scope: `backend/tests/unit/test_ws_lifecycle.py`
+  - Falsifier: 突變為忽略 close 事件時測試失敗，且失敗明確歸因於資源洩漏斷言
+  - Target: `backend/app/ws.py`
+
+## Pre-Delivery 盤點與覆蓋對照
+
+### 1. Pre-Delivery Orphan Coverage Sweep (孤立產物盤點)
+- `truth-delta.md` 非 NOOP 項目：全量分配至 T008–T014、T016、T018、T020。
+- `research.md` 已拍板 Decisions：全量被 task Read 引用或由具體 task 交付。
+- `specs/truth/techstack.md` 異動章節：由 T001–T003 承接。
+- 孤立產物件數：0。掃描通過。
+
+### 2. Claim→Witness 盤點對照表 (Claim→Witness Ledger)
+
+| Claim ID | 來源規格 / Truth 錨點 | 宣稱效果（Atomic Effect Claim） | 見證型態 (`[WITNESS]` / `[BDD-GREEN]` / `accepted-unwitnessed`) | 綁定 Task / 決策記錄 | 鑑別性反證（Discriminating Falsifier） | 狀態 |
+|---|---|---|---|---|---|---|
+| CLM-001 | FR-001 | 房間雙方皆可送出訊息並呈現在聊天歷史 | [BDD-GREEN] | T018 | 關閉歷史廣播 -> BDD 測試紅燈 | 已驗證 |
+| CLM-002 | FR-002 | 單人等待時送出訊息會被拒絕 | [BDD-GREEN] | T016 | 允許單人發言 -> BDD 測試紅燈 | 已驗證 |
+| CLM-003 | NFR-002 | websocket 異常中斷時連線資源立即釋放 | [WITNESS] | T022 | 突變忽略 close 事件 -> 單元測試紅燈 | 已驗證 |
+

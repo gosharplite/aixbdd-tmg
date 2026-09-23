@@ -123,3 +123,33 @@
 ````md
 - **NFR-004**: 系統 MUST 在排序失敗時以三步驟精靈模式引導使用者完成恢復。
 ````
+
+# Rule 5 - 每個規範性條目（FR/NFR/SC/EC）都必須標註驗證意圖（Verification Intent）
+
+- Level: `MUST`
+- 每個規範性條目（包含故事專屬與全域之 FR、NFR、成功標準 SC、邊界情況 EC）都必須標註其驗證意圖（Verification Intent），向後續 RD 規劃階段傳達驗證路徑：
+  1. `observable → <對應驗收情境或 Rule/Scenario 識別>`：可透過驗收 Gherkin 由外部使用者行為或黑箱介面觀察並驗證。
+  2. `unobservable → <預期見證層級>`：無法直接由外部 Gherkin 驗收流程觀察，必須在實作層建立單元測試 pin、故障注入 seam 或 benchmark（例如 `unit pin`、`fault-injection seam`）。
+  3. `accepted-unwitnessed`：經專案決策面核可接受免見證（必須符合反洗白條款，不得自行濫用）。
+- 嚴禁遺留任何未分類、未標註驗證意圖之規範性條目。
+- **PM 提示責任與邊界**：PM 端在此階段標註的是粗粒度意圖提示（coarse-grained intent hint）。基於 `spec-pm-authored` 不變量，RD 端不得擅改 `spec.md` 條目，而是在下游 `/axb-tasks` 依據該提示與 truth 表面文字，將需求展開為具體、原子化的效果宣稱（Atomic Effect Claims），納入 Claim→Witness 盤點對照表。
+
+## Good Example
+
+- 這個例子是好的，因為每條 FR/NFR/EC 都清楚標記了驗證意圖與路徑。
+
+````md
+- **FR-001**: 系統 MUST 允許使用者匯入一張或多張照片。[Verification Intent: observable → 驗收情境 1]
+- **NFR-001**: 回滾操作在處理失敗時 MUST 保持資料庫檔案完整無損。[Verification Intent: unobservable → fault-injection seam]
+- **EC-001**: 當磁碟空間不足時，系統 MUST 拋出寫入失敗錯誤並不留殘留暫存檔。[Verification Intent: unobservable → unit pin]
+````
+
+## Bad Example
+
+- 這個例子是壞的，因為條目包含強烈規範性要求（MUST），卻完全沒有說明預期如何驗證，導致非可觀察需求在後續流程中失落。
+
+````md
+- **NFR-001**: 回滾操作 MUST 具備耐久性與原子性：寫入暫存檔 + fsync + 原子性 rename。
+- 當系統崩潰時，MUST 保證舊資料不受損。
+````
+

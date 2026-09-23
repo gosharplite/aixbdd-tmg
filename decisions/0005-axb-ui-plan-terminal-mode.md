@@ -1,6 +1,6 @@
 # ADR 0005 — axb-ui-plan terminal mode for CLI/TUI interfaces
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-09-13
 - **Deciders:** repo owner (gosharplite)
 - **Supersedes:** —

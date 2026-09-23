@@ -281,13 +281,13 @@ The requirements artifact of a `PlanPackage`: user stories, acceptance criteria,
 
 ### `Task`
 
-One unit of work in a `PlanPackage`'s task list (`tasks.md`) produced by axb-tasks: test-alignment, feature green or refactor, code-removal, or regression work, each with an execution marker. axb-implement executes tasks in constraint-ordered batches, marking each done before starting the next.
+One unit of work in a `PlanPackage`'s task list (`tasks.md`) produced by axb-tasks: test-alignment, feature green or refactor, code-removal, regression, or witness work, each with an execution marker. axb-implement executes tasks in constraint-ordered batches, marking each done before starting the next.
 
 **Attributes**
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `marker` | string | Execution marker driving how the task runs (for example test alignment, feature green, refactor, code removal, or regression). |
+| `marker` | string | Execution marker driving how the task runs (for example test alignment, feature green, refactor, code removal, regression, or witness). |
 | `done` | boolean | Flipped to done only after the task's verification has passed. |
 
 **Actions**

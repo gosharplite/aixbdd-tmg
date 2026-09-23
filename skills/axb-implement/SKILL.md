@@ -16,6 +16,7 @@ disable-model-invocation: true
 - 嚴格執行不能跳步驟。`don't stop until deliver` 不是跳步驟的許可。
 - Feature phase 仍序列。`[BDD-GREEN]`、`[BDD-REFACTOR]` 才委派 `/axb-bdd`，並把該 phase 的 `Test Scope` 當範疇。
 - Phase 3 的 `[BDD-ALIGN]`、`[BDD-REMOVE]`、`[BDD-RED]` 不委派 `/axb-bdd`；由 subagent 讀 `dsl.md` 該列的 `StepDef 實作語意` 寫測試層。
+- `[WITNESS]` 任務不委派 `/axb-bdd`（直擊單元/故障注入測試，依其 Test Scope 與 Falsifier 執行，DoD 需通過鑑別性突變、失敗歸因明確與還原重驗）。
 - Phase 3 review 通過前，不得進入 Feature Green。
 - 全部 tasks `[X]` 後詢問是否 git commit；不得自動 commit。
 
@@ -39,7 +40,7 @@ disable-model-invocation: true
 1. READ 讀取 `rules/嚴格禁止跳步驟判準.md` 與 `rules/平行執行與檔案衝突判準.md`，確認本輪任務集邊界。
 2. READ 若 `tasks.md` 當前 phase 含 `Parallel Hint`，讀取 `rules/ParallelHint平行Subagent與同檔調度判準.md`。
 3. THINK 收斂本輪任務集：有 `Parallel Hint` 則為 Hint 列出的 `[P]` 批次；否則恰好 1 個已解鎖 task。
-4. THINK 收斂執行模式：Setup 與 Foundational 直接實作並停在該則「只做／不做」；Phase 3 的 ALIGN / REMOVE / RED 走 subagent 測試層；review 走 review 迴圈；`[BDD-GREEN]` / `[BDD-REFACTOR]` 委派 `/axb-bdd`；`[CODE-REMOVE]`、`[REGRESSION]` 直接實作或直接驗證。
+4. THINK 收斂執行模式：Setup 與 Foundational 直接實作並停在該則「只做／不做」；Phase 3 的 ALIGN / REMOVE / RED 走 subagent 測試層；review 走 review 迴圈；`[BDD-GREEN]` / `[BDD-REFACTOR]` 委派 `/axb-bdd`；`[CODE-REMOVE]`、`[REGRESSION]` 直接實作或直接驗證；`[WITNESS]` 執行單元/故障注入測試層，證明鑑別性突變能紅燈且歸因明確，還原後全綠；或執行降級撤除散文。
 
 ## Phase 4 -- 載入精確參照並執行
 

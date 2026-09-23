@@ -7,6 +7,8 @@
 
 - 每個**開發任務**都必須對應 `truth-delta.md` 中的 ADD / MODIFY / DELETE / NOOP 語意。
 - 本輪 `research.md` 已拍板 Decisions 與 `specs/truth/**` 非 NOOP 項目，必須在 tasks 的 `Read` 或交付目標中被全量涵蓋，不得遺留孤立產物（Pre-Delivery Orphan Coverage Sweep）。
+- 每個規範性條目（FR / NFR / SC / EC）衍生之不可觀察原子效果宣稱（Atomic Effect Claims），必須排定 `[WITNESS]` 任務覆蓋，或在專案決策面記錄為 `accepted-unwitnessed`；未經見證者絕不得以散文保證形式晉升至 truth 表面（Claim→Witness Obligation）。
+- 任務間存在先後依賴關係時，必須以 `Dependencies: T###` 明示宣告排序約束。
 - 由 `research.md` Decision 衍生的 Setup / Foundational 建置或驗證 task（如 build 參數、version、make target），不強制對應 `truth-delta.md` row。
 - Phase 1 `Setup` 只做本輪新增技術的基礎建設、技術環境與最後的 smoke-test；不寫 DSL 語意、不寫產品行為。
 - Phase 2 `Foundational` 只建立後續實作程式、測試共用元件、入口、fixture、helper 與落點骨架。
@@ -165,3 +167,43 @@
 
 - [ ] T{{CODE_REMOVE_TASK_ID}} [CODE-REMOVE] {{CODE_REMOVE_TASK_TITLE}}
 - [ ] T{{REGRESSION_TASK_ID}} [REGRESSION] 跑 Test Scope，確認新版 truth 成立
+
+## Phase 4W: Witness Pins - {{WITNESS_GROUP_NAME}}
+
+<!--
+  條件性 Phase：僅在本輪存在不可由 Gherkin 外部觀察之規範性宣稱（NFR / SC / EC / 內部不變量）時建立。
+  若本輪無此類宣稱，或全部皆為可觀察之 Feature，可省略此 Phase。
+-->
+
+**Goal**: {{WITNESS_PHASE_GOAL}}
+
+**Shared Must Read**:
+- `specs/truth/techstack.md` -> {{WITNESS_TECHSTACK_SECTION}}
+- `spec.md` -> {{WITNESS_SPEC_SECTIONS}}
+- `truth-delta.md` -> {{WITNESS_TRUTH_DELTA_ROWS}}
+
+**Boundary**:
+- {{WITNESS_BOUNDARY_RULE}}
+
+- [ ] T{{WITNESS_TASK_ID}} [WITNESS] {{WITNESS_CLAIM_EFFECT}}
+  - Dependencies: T{{WITNESS_DEPENDS_ON_TASK_ID}}
+  - Read:
+    - `spec.md` -> {{WITNESS_SPEC_CLAIM_ID}}
+    - `specs/truth/techstack.md` -> {{WITNESS_TECHSTACK_ITEM}}
+  - Test Scope: `{{WITNESS_TEST_PATH}}`
+  - Falsifier: {{WITNESS_DISCRIMINATING_MUTATION}}
+  - Target: `{{WITNESS_TARGET_CODE_PATH}}`
+
+## Pre-Delivery 盤點與覆蓋對照
+
+### 1. Pre-Delivery Orphan Coverage Sweep (孤立產物盤點)
+- `truth-delta.md` 非 NOOP 項目：全量分配至 tasks。
+- `research.md` 已拍板 Decisions：全量被 task Read 引用或直接交付。
+- `specs/truth/techstack.md` 異動章節：全量由 Setup/Foundational 任務承接。
+
+### 2. Claim→Witness 盤點對照表 (Claim→Witness Ledger)
+
+| Claim ID | 來源規格 / Truth 錨點 | 宣稱效果（Atomic Effect Claim） | 見證型態 (`[WITNESS]` / `[BDD-GREEN]` / `accepted-unwitnessed`) | 綁定 Task / 決策記錄 | 鑑別性反證（Discriminating Falsifier） | 狀態 |
+|---|---|---|---|---|---|---|
+| CLM-{{CLAIM_ID}} | {{CLAIM_SOURCE}} | {{CLAIM_EFFECT}} | {{WITNESS_TYPE}} | T{{BINDING_TASK_ID}} / ADR-{{ADR_NUM}} | {{FALSIFIER_DESCRIPTION}} | {{STATUS}} |
+

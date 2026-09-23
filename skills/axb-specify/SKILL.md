@@ -33,7 +33,7 @@ disable-model-invocation: true
 ## Phase 4 -- 產出 plan artifacts 並自檢
 
 1. WRITE 將 spec 寫入 `specs/plans/NNN-<slug>/spec.md`，將 checklist 寫入 `specs/plans/NNN-<slug>/checklists/requirements.md`。
-2. READ 讀取 `rules/spec完整性與一致性自檢判準.md`，檢查使用者故事、FR / NFR、驗收情境、邊界情況、成功標準、假設與剩餘 clarify 缺口是否一致；若不符合，立即修正。
+2. READ 讀取 `rules/spec完整性與一致性自檢判準.md`，檢查使用者故事、FR / NFR、驗收情境、邊界情況（EC-nnn）、成功標準、各規範性條目之驗證意圖標註、假設與剩餘 clarify 缺口是否一致；若不符合，立即修正。
 
 ## Phase 5 -- 交付後續 handoff
 

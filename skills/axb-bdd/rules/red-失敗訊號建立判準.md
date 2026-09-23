@@ -120,3 +120,35 @@ Focused test：
 結果：
 - 不知道哪個 failure 對應哪個 slice
 ```
+
+# Rule 5 - 非 Gherkin 見證 pin 的失敗訊號必須具備可歸因性與獨立性
+
+- Level: `MUST`
+- 當為不可由 Gherkin 外部觀察之原子效果宣稱建立單元測試或故障注入見證 pin（`[WITNESS]`）時，本 RuleFile 的「有效失敗訊號」原則同樣適用：
+  1. **最窄執行入口**：必須指明該見證測試的單一測試案例或函式，不得以全量測試套件籠統代之。
+  2. **失敗訊號真實性與歸因**：見證 pin 的失敗必須直接源於目標保證機制被破壞（例如斷言資料損毀或特定異常），絕不得被語法錯誤、缺少套件、全域逾時或不相干之 crash 遮蔽。
+  3. **權威分工聲明（Two-Authority Split）**：
+     - 本 RuleFile 治理失敗訊號真實性、最窄入口與失敗歸因判準（Signal-reality & Attribution）。
+     - 具體的任務綁定、鑑別性突變驗證、還原重驗全綠與降級終端處理，由 `axb-implement` 的 `rules/完成定義-驗證與回寫判準.md` 治理。
+
+## Good Example
+
+- 這個例子是好的，因為單元測試見證 pin 具備最窄入口，且失敗訊號明確歸因於 fsync 遺漏。
+
+```md
+Focused test: `go test -run TestHistory_FsyncDurability ./internal/infrastructure/history`
+突變破壞：移除 `f.Sync()`。
+失敗訊號：`Expected file to be synced to disk before rename, but sync count was 0`。
+歸因明確且無其他遮蔽錯誤。
+```
+
+## Bad Example
+
+- 這個例子是壞的，因為測試掛在 import 錯誤，卻被誤當成見證紅燈。
+
+```md
+突變破壞：隨意更動程式碼。
+失敗訊號：`syntax error: unexpected newline, expecting comma or }`。
+此為語法編譯失敗，非保證機制之行為否證，不具可歸因性。
+```
+

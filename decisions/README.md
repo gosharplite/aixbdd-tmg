@@ -39,4 +39,5 @@ Typo- and editorial-only fixes do not need an ADR.
 | [0002](0002-project-language-override.md) | Project-language override for STANDARDS | Accepted |
 | [0003](0003-parallel-hint-concurrency-arbitration.md) | ParallelHint concurrency arbitration and disjoint file isolation | Accepted |
 | [0004](0004-pre-delivery-orphan-coverage-sweep.md) | Pre-Delivery Orphan Coverage Sweep for tasks.md | Accepted |
-| [0005](0005-axb-ui-plan-terminal-mode.md) | axb-ui-plan terminal mode for CLI/TUI interfaces | Proposed |
+| [0005](0005-axb-ui-plan-terminal-mode.md) | axb-ui-plan terminal mode for CLI/TUI interfaces | Accepted |
+| [0006](0006-claim-witness-obligation.md) | Claim→witness obligation for normative clauses and truth prose | Accepted |

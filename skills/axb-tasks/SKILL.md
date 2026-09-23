@@ -1,6 +1,6 @@
 ---
 name: axb-tasks
-description: 根據 plan package 的 `spec.md`、`plan.md`、`research.md`、`ui/**`，以及 `truth-delta.md` 與 `specs/truth/**` 產出可直接執行的 `tasks.md`。先寫 Setup 與 Foundational，測試層集中在 Phase 3 `Test Alignment & Implementation`；Feature phase 只留 Green / Refactor 或 CODE-REMOVE / REGRESSION。
+description: 根據 plan package 的 `spec.md`、`plan.md`、`research.md`、`ui/**`，以及 `truth-delta.md` 與 `specs/truth/**` 產出可直接執行的 `tasks.md`。先寫 Setup 與 Foundational，測試層集中在 Phase 3 `Test Alignment & Implementation`；Feature phase 留 Green / Refactor 或 CODE-REMOVE / REGRESSION，不可觀察宣稱排定 Phase 4W `[WITNESS]` pins。
 disable-model-invocation: true
 ---
 
@@ -31,16 +31,17 @@ disable-model-invocation: true
 3. THINK 寫入 `DSL 參照`（每句的權威 `dsl.md` 與讀 `StepDef 實作語意` 的方法）、`Markers`、本輪要讀的句、`Boundary` 與 `Parallel Hint`。
 4. THINK 本 phase 不得安排產品碼任務。
 
-## Phase 4 -- 建立 Feature phases
+## Phase 4 -- 建立 Feature phases 與 Witness pins
 
 1. THINK 對 `ADD` 的 truth interface feature file，建立 `[BDD-GREEN] -> [BDD-REFACTOR]`，並宣告 `Test Scope`。
 2. THINK 對 `MODIFY` 的 truth interface feature file，建立 `[BDD-GREEN] -> [BDD-REFACTOR]`，並宣告 `Test Scope`。
 3. THINK 對 `DELETE` 的 truth interface feature file、Rule、Example 或 DSL 句型，建立 `[CODE-REMOVE] -> [REGRESSION]`，並宣告 `Test Scope`。
 4. THINK 為每個 Feature phase 填入 `Shared Must Read`、`Boundary` 與 `Test Scope`；未使用介面根共用 DSL row 時省略根 DSL 參照。truth 參照必須使用 `specs/truth/**` 路徑。
 5. THINK 若驗收情境無法被現有 truth feature、同模組 DSL 與相關共用 DSL rows 唯一承接，停止受影響範圍並回交 `/axb-dsl-refine`。
+6. THINK 盤點 `spec.md` 規範性條目與 truth 表面文字，將不可由 Gherkin 外部觀察之原子效果宣稱排定為 Phase 4W `[WITNESS]` pins；標明 `Dependencies: T###`、`Test Scope` 與 `Falsifier`。若無法見證，依反洗白條款要求人類決策者在專案決策面核可，或自 truth 表面徹底降級清除。
 
 ## Phase 5 -- 輸出並驗證 tasks.md
 
 1. WRITE 依 template 骨架輸出 `specs/plans/NNN-<slug>/tasks.md`。
-2. READ 依 `rules/Pre-Delivery覆蓋檢驗與孤立產物盤點判準.md` 執行全量覆蓋掃描（Pre-Delivery Orphan Coverage Sweep）：確認 `truth-delta.md` 非 NOOP 項目、`research.md` 已拍板 Decisions、與 `specs/truth/techstack.md` 本輪異動章節，皆已被 task 的 `Read` 引用或由具體 task 直接交付；若發現孤立產物，依判準補齊 task 或 `Read` 參照後再重跑掃描。掃描斷言細節以該 rule 檔為準，不在本 SOP 重述。
-3. READ 回頭檢查格式：任務皆為 `- [ ] T###`、truth-delta 已納入 Core Inputs、沒有 Impact Audit phase、有新增技術時 Setup 寫清套件名與 smoke-test、Foundational 每則有「只做／不做」、Phase 3 已集中 ALIGN / REMOVE / RED、Feature phase 不含 `[BDD-RED]` / `[BDD-ALIGN]` / `[BDD-REMOVE]`、每個 Feature phase 有 `Test Scope`、truth 路徑都指向 `specs/truth/**`；若不符合，立即修正。
+2. READ 依 `rules/Pre-Delivery覆蓋檢驗與孤立產物盤點判準.md` 執行全量覆蓋掃描（Pre-Delivery Orphan Coverage Sweep）與 Claim→Witness 覆蓋盤點（Claim→Witness Coverage Sweep）：確認 `truth-delta.md` 非 NOOP 項目、`research.md` 已拍板 Decisions、與 `specs/truth/techstack.md` 本輪異動章節皆有 task 承接；並輸出 `Claim→Witness 盤點對照表`，確認本輪所有規範性條目與 truth 表面宣稱皆已綁定 `[BDD-GREEN]`、`[WITNESS]` 或合法的 `accepted-unwitnessed` 記錄；未符合者阻擋交付。
+3. READ 回頭檢查格式：任務皆為 `- [ ] T###`、truth-delta 已納入 Core Inputs、沒有 Impact Audit phase、有新增技術時 Setup 寫清套件名與 smoke-test、Foundational 每則有「只做／不做」、Phase 3 已集中 ALIGN / REMOVE / RED、Feature phase 不含 `[BDD-RED]` / `[BDD-ALIGN]` / `[BDD-REMOVE]`、每個 Feature phase 有 `Test Scope`、不可觀察宣稱以 `[WITNESS]` 標註且具備 `Dependencies` 與 `Falsifier`、末尾具備 `Claim→Witness 盤點對照表`、truth 路徑都指向 `specs/truth/**`；若不符合，立即修正。

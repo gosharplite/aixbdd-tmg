@@ -41,3 +41,4 @@ Typo- and editorial-only fixes do not need an ADR.
 | [0004](0004-pre-delivery-orphan-coverage-sweep.md) | Pre-Delivery Orphan Coverage Sweep for tasks.md | Accepted |
 | [0005](0005-axb-ui-plan-terminal-mode.md) | axb-ui-plan terminal mode for CLI/TUI interfaces | Accepted |
 | [0006](0006-claim-witness-obligation.md) | Claim→witness obligation for normative clauses and truth prose | Accepted |
+| [0007](0007-upstream-attribution-notice.md) | Upstream attribution and NOTICE file | Accepted |

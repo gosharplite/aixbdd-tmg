@@ -1,4 +1,7 @@
-本 skill（axb-tasks）參考並改寫自 GitHub Spec Kit：
+本 skill（axb-tasks）源自 AIxBDD
+（https://github.com/Waterball-Software-Academy/aixbdd；
+Copyright 2026 - 水球球特務有限公司 (Waterball Agent Limited)；Apache License 2.0），
+並參考改寫自 GitHub Spec Kit：
 https://github.com/github/spec-kit
 
 以下為 Spec Kit 原始 MIT License 全文，依該授權要求予以保留與標註。

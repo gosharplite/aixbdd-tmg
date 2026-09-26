@@ -43,6 +43,25 @@ When developing a CLI application (no web frontend or HTTP/REST API), the workfl
 - **Decisions**: changes to this repo's own governed artifacts (skills, rules, `STANDARDS.md`, the
   domain model) are recorded as short ADRs under `decisions/` — see
   [`decisions/README.md`](decisions/README.md).
-- Some skills (specify, clarify-over-specs, tasks, implement, technical-research) are adapted from [GitHub Spec Kit](https://github.com/github/spec-kit) (MIT)
+- **Attribution**: this repo is a derivative of **AIxBDD** by Waterball Agent Limited, licensed under
+  Apache-2.0 — see [Attribution & license](#attribution--license) and [`NOTICE`](NOTICE).
+
+## Attribution & license
+
+`aixbdd-tmg` is a derivative work of **AIxBDD** — *"PM defines acceptance criteria in Gherkin, RD turns
+them into automated tests, developing correct systems in one continuous flow"* — the BDD workflow by
+Waterball Agent Limited ([Waterball-Software-Academy/aixbdd](https://github.com/Waterball-Software-Academy/aixbdd)),
+licensed under the **Apache License, Version 2.0**.
+
+- This repository retains that license — see [`LICENSE`](LICENSE).
+- The upstream attribution notice is reproduced in [`NOTICE`](NOTICE), as required by Apache-2.0 §4(d).
+- Five of the inherited skills — `axb-specify`, `axb-clarify-over-specs`, `axb-tasks`, `axb-implement`,
+  and `axb-technical-research` — were in turn derived by AIxBDD from
+  [GitHub Spec Kit](https://github.com/github/spec-kit) (MIT); the applicable copyright and license
+  notices are retained in each of those skill directories.
+
+Changes from the upstream AIxBDD workflow: the skills are renamed with an `axb-` prefix; this repository
+adds a [domain model](domain-model/), [decision records](decisions/), and PM/RD
+[role configs](roles/), plus CLI-application guidance.
 
 In short: **it's a prompt-engineering framework that turns AI-assisted development into a disciplined BDD pipeline with human review gates at each artifact.**
